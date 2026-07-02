@@ -1,21 +1,21 @@
 {
-  "tagline": "Keeping our community connected on the water",
-  "site_url": "https://tomahawkdestiny.com",
-  "committee_emails": [
-    "community@tomahawkdestiny.com",
-    "maintenance@tomahawkdestiny.com",
-    "epic@tomahawkdestiny.com",
-    "finance@tomahawkdestiny.com",
-    "arc@tomahawkdestiny.com"
-  ],
-  "stay_informed_title": "Stay Informed",
-  "stay_informed_text": "Your neighbors, your calendar, and the notices worth knowing",
-  "submit_text": "Have photos, tips, or questions? Send them to",
-  "submit_email": "community@tomahawkdestiny.com",
-  "colophon": "Tomahawk Island Floating Home Community • 288 N Tomahawk Island Drive, Portland, OR 97217 • (503) 735‑3057",
-  "house_ad": {
-    "name": "Your ad here",
-    "tagline": "Sponsoring TDA Currents helps cover the monthly print run for every doorstep on the moorage.",
-    "url": "Contact community@tomahawkdestiny.com"
-  }
+    "tagline": "Keeping our community connected on the water",
+    "site_url": "https://tomahawkdestiny.com",
+    "committee_emails": [
+        "community@tomahawkdestiny.com",
+        "maintenance@tomahawkdestiny.com",
+        "epic@tomahawkdestiny.com",
+        "finance@tomahawkdestiny.com",
+        "arc@tomahawkdestiny.com"
+    ],
+    "stay_informed_title": "Stay Informed",
+    "stay_informed_text": "Your neighbors, your calendar, and the notices worth knowing",
+    "submit_text": "Have photos, tips, or questions? Send them to",
+    "submit_email": "community@tomahawkdestiny.com",
+    "colophon": "Tomahawk Island Floating Home Community • 288 N Tomahawk Island Drive, Portland, OR 97217 • (503) 735‑3057",
+    "house_ad": {
+        "name": "Your ad here",
+        "tagline": "Sponsoring TDA Currents helps cover the monthly print run for every doorstep on the moorage.",
+        "url": "Contact community@tomahawkdestiny.com"
+    }
 }

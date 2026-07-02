@@ -96,7 +96,13 @@ function sanitize_issue(array $in): array {
         ],
         'committee_highlights' => [
             'icon'  => icon_id($in['committee_highlights']['icon'] ?? ''),
-            'items' => $items($in['committee_highlights']['items'] ?? [], 2, 2, $leadText),
+            // The template renders "name · text"; strip whitespace and any
+            // typed middot from the joint so the separator never doubles.
+            'items' => $items($in['committee_highlights']['items'] ?? [], 2, 2, fn(array $i) => [
+                'icon' => icon_id($i['icon'] ?? ''),
+                'lead' => preg_replace('/[\s\x{00B7}]+$/u', '', plain($i['lead'] ?? '')),
+                'text' => preg_replace('/^[\s\x{00B7}]+/u', '', rich_line($i['text'] ?? '')),
+            ]),
         ],
         'calendar' => [
             'icon'   => icon_id($in['calendar']['icon'] ?? ''),

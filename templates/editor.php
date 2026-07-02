@@ -183,7 +183,7 @@ $houseAd = $settings['house_ad'] ?? [];
       </div>
       <p class="ed-note">Always exactly two items.</p>
       <?php foreach (array_slice($issue['committee_highlights']['items'], 0, 2) as $i => $item):
-          lead_item("committee_highlights[items][$i]", $item, 'Committee name', ['text_max' => 215]);
+          lead_item("committee_highlights[items][$i]", $item, 'Committee name', ['text_max' => 150]);
       endforeach; ?>
     </section>
 
@@ -248,7 +248,7 @@ $houseAd = $settings['house_ad'] ?? [];
       <div class="field">
         <label>Text</label>
         <?php rich_field('friendly_reminder[text]', $issue['friendly_reminder']['text'] ?? '', false, ['group' => 'fr']); ?>
-        <div class="char-count" data-group-counter="fr" data-group-max="270" data-group-label="lead-in + text"></div>
+        <div class="char-count" data-group-counter="fr" data-group-max="125" data-group-label="lead-in + text"></div>
       </div>
     </section>
 
@@ -293,7 +293,7 @@ $houseAd = $settings['house_ad'] ?? [];
         <div class="field">
           <label>Body <span class="hint">(Enter starts a new paragraph)</span></label>
           <?php rich_field('flex[editorial][body]', $flex['editorial']['body'] ?? '', true,
-              ['limits' => ['none' => 1000, 'portrait-float' => 850, 'landscape-banner' => 650]]); ?>
+              ['limits' => ['none' => 885, 'portrait-float' => 850, 'landscape-banner' => 415]]); ?>
         </div>
       </div>
     </section>
@@ -317,7 +317,7 @@ $houseAd = $settings['house_ad'] ?? [];
         <?php endforeach; ?>
       </div>
       <button type="button" class="btn btn-small" id="ah-add">Add an item</button>
-      <div class="char-count" data-group-counter="ah" data-group-max="650" data-group-label="intro + all items"></div>
+      <div class="char-count" data-group-counter="ah" data-group-max="850" data-group-label="intro + all items"></div>
     </section>
 
     <section class="ed-section">
@@ -421,6 +421,6 @@ $houseAd = $settings['house_ad'] ?? [];
        measurement would come back 0 ("always fits"). -->
   <iframe id="fit-frame" src="?issue=<?= e($issueId) ?>&amp;measure=1" tabindex="-1" aria-hidden="true"></iframe>
 </main>
-<script src="js/editor.js"></script>
+<script src="<?= asset('js/editor.js') ?>"></script>
 </body>
 </html>

@@ -54,7 +54,10 @@ $img = $sp['image'] ?? [];
         <?php if ($i > 0): ?><div class="item-divider"></div><?php endif; ?>
         <div class="icon-item">
           <?= tda_icon($item['icon'] ?? null, 16, 'item-icon') ?>
-          <p><strong><?= e($item['lead'] ?? '') ?></strong><?= ($item['lead'] ?? '') !== '' && ($item['text'] ?? '') !== '' ? ' · ' : ' ' ?><?= rich($item['text'] ?? '') ?></p>
+          <?php // Strip the joint here too, so issues saved before the rule render clean.
+            $chLead = preg_replace('/[\s\x{00B7}]+$/u', '', trim($item['lead'] ?? ''));
+            $chText = preg_replace('/^[\s\x{00B7}]+/u', '', trim(rich($item['text'] ?? ''))); ?>
+          <p><strong><?= e($chLead) ?></strong><?= $chLead !== '' && $chText !== '' ? ' · ' : ' ' ?><?= $chText ?></p>
         </div>
         <?php endforeach; ?>
       </div>

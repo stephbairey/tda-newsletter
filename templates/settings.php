@@ -4,7 +4,7 @@ $adminTitle = 'Settings';
 include __DIR__ . '/_admin_head.php';
 $s = $settings;
 ?>
-<main class="admin-main">
+<main class="admin-main admin-main-settings">
   <h1 class="admin-h1">Settings</h1>
   <p class="admin-note">These change about once a year. They appear on every issue, so edit with care.</p>
 
@@ -61,7 +61,7 @@ $s = $settings;
       </div>
     </fieldset>
 
-    <fieldset>
+    <fieldset class="hero-fieldset">
       <legend>Masthead image (page 1 hero)</legend>
       <img class="hero-preview" src="<?= e(hero_src()) ?>" alt="Current masthead image">
       <div class="field">

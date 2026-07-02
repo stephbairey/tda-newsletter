@@ -56,16 +56,20 @@ $dateLine = ucwords(strtolower($issue['issue']['date_label'] ?? ''));
         <?php if (!empty($ed['headline'])): ?>
         <h3 class="editorial-headline"><?= e($ed['headline']) ?></h3>
         <?php endif; ?>
-        <?php if (!empty($edImg['enabled']) && !empty($edImg['src'])): ?>
-        <div class="editorial-photo treatment-<?= e($edImg['treatment'] ?? 'landscape-banner') ?>">
-          <img src="uploads/<?= e($edImg['src']) ?>" alt="<?= e($edImg['caption'] ?? '') ?>"
-               style="object-position: <?= e($edImg['object_position'] ?? 'center center') ?>;">
-          <?php if (!empty($edImg['caption'])): ?>
-          <div class="spotlight-caption"><?= e($edImg['caption']) ?></div>
+        <div class="editorial-body">
+          <?php // Photo lives inside the body (like the Spotlight) so the
+                // portrait float actually wraps the text around it. ?>
+          <?php if (!empty($edImg['enabled']) && !empty($edImg['src'])): ?>
+          <div class="editorial-photo treatment-<?= e($edImg['treatment'] ?? 'landscape-banner') ?>">
+            <img src="uploads/<?= e($edImg['src']) ?>" alt="<?= e($edImg['caption'] ?? '') ?>"
+                 style="object-position: <?= e($edImg['object_position'] ?? 'center center') ?>;">
+            <?php if (!empty($edImg['caption'])): ?>
+            <div class="spotlight-caption"><?= e($edImg['caption']) ?></div>
+            <?php endif; ?>
+          </div>
           <?php endif; ?>
+          <?= rich_paras($ed['body'] ?? '') ?>
         </div>
-        <?php endif; ?>
-        <div class="editorial-body"><?= rich_paras($ed['body'] ?? '') ?></div>
         <?php endif; ?>
       </div>
 

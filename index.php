@@ -58,6 +58,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($action === 'save_settings') {
+        // A body over post_max_size arrives with $_POST and $_FILES empty;
+        // saving that would blank every setting. Refuse instead.
+        if (!$_POST && (int)($_SERVER['CONTENT_LENGTH'] ?? 0) > 0) {
+            header('Location: ?page=settings&hero_error=' . urlencode(
+                'That file is too large for the server to accept — nothing was saved.'));
+            exit;
+        }
         save_settings(sanitize_settings($_POST));
         $heroError = handle_hero_upload($_FILES['hero'] ?? []);
         header('Location: ?page=settings&saved=1'

@@ -12,6 +12,16 @@ function e(?string $s): string {
     return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8');
 }
 
+/**
+ * Asset URL with a cache-busting version (file mtime). Browsers cache CSS/JS
+ * aggressively; without this, editors keep running last week's stylesheet
+ * after a deploy and "fixed" bugs stay visibly broken for them.
+ */
+function asset(string $path): string {
+    $f = TDA_ROOT . '/' . $path;
+    return e($path . (is_file($f) ? '?v=' . filemtime($f) : ''));
+}
+
 function load_settings(): array {
     $file = TDA_DATA . '/settings.json';
     if (!is_file($file)) return [];

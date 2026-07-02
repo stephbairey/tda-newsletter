@@ -400,8 +400,11 @@ legend {
 .field-warn[hidden] { display: none; }
 
 /* ===== Settings ===== */
-.settings-form { max-width: 620px; }
-.hero-preview { max-width: 340px; border: 1px solid var(--rule); display: block; margin-bottom: 10px; }
+.admin-main-settings { max-width: 1090px; }
+.settings-form fieldset, .settings-form > .field { max-width: 620px; }
+/* The hero fieldset breaks out of the narrow column so the preview reads at size. */
+.settings-form .hero-fieldset { max-width: none; }
+.hero-preview { width: 1000px; max-width: 100%; border: 1px solid var(--rule); display: block; margin-bottom: 10px; }
 
 .btn-danger { color: #b03030; border-color: #d9b0b0; }
 .btn-danger:hover { background: var(--err-bg); }
