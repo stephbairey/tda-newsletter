@@ -41,6 +41,13 @@ one with fewer moving parts and less that a backup person could break.
 - **Flat-file storage.** One JSON file per issue in `data/`. **No database, no MySQL.**
   Rationale: portable, human-readable, backed up by copying a folder, easy for a backup
   person to understand.
+- **All JSON saves are atomic: write-temp-then-rename.** Every persist goes through
+  `atomic_write_json()` in `templates/store.php`: write to a dotted temp file in the same
+  directory (same filesystem, so the rename is atomic), fflush + fsync, then `rename()` over
+  the target; on any failure, remove the temp and leave the original untouched. A crash or
+  host stall mid-save can leave only the complete old file or the complete new file, never a
+  torn one. Never write onto a live JSON file directly (`file_put_contents` on the target is
+  the bug, not a shortcut).
 - **No build step, no bundler, no npm.** Editors and a backup person cannot run a build.
   Plain PHP, CSS, and vanilla JS served directly.
 - **Icons are Maya's own SVG set**, committed in the repo at `/icons/svg`. **Not Lucide.**

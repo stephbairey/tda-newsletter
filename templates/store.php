@@ -170,10 +170,32 @@ function sanitize_issue(array $in): array {
     ];
 }
 
+/**
+ * Atomic JSON write: temp file in the same directory (same filesystem, so the
+ * rename is atomic), fflush + fsync so the bytes are on disk, then rename over
+ * the target. A crash or host stall mid-save leaves either the complete old
+ * file or the complete new file — never a torn one. On any failure the temp is
+ * removed and the original is untouched. Every JSON the CMS persists must go
+ * through this; never write onto the live file directly.
+ */
+function atomic_write_json(string $path, array $data): bool {
+    $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . "\n";
+    // Dotted name: invisible to the *.json globs; pid-suffixed so two saves never share a temp.
+    $tmp = dirname($path) . '/.' . basename($path) . '.' . getmypid() . '.tmp';
+    $fh = @fopen($tmp, 'wb');
+    if ($fh === false) return false;
+    $ok = fwrite($fh, $json) === strlen($json)
+        && fflush($fh)
+        && (!function_exists('fsync') || fsync($fh)); // fsync is PHP 8.1+
+    $ok = fclose($fh) && $ok;
+    if ($ok && rename($tmp, $path)) return true;
+    @unlink($tmp);
+    return false;
+}
+
 function save_issue(string $id, array $issue): bool {
     if (!preg_match('/^\d{4}-\d{2}$/', $id)) return false;
-    $json = json_encode($issue, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-    return file_put_contents(TDA_DATA . "/$id.json", $json . "\n", LOCK_EX) !== false;
+    return atomic_write_json(TDA_DATA . "/$id.json", $issue);
 }
 
 function sanitize_settings(array $in): array {
@@ -200,8 +222,7 @@ function sanitize_settings(array $in): array {
 }
 
 function save_settings(array $settings): bool {
-    $json = json_encode($settings, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-    return file_put_contents(TDA_DATA . '/settings.json', $json . "\n", LOCK_EX) !== false;
+    return atomic_write_json(TDA_DATA . '/settings.json', $settings);
 }
 
 /** "AUGUST 2026" from "2026-08". */
