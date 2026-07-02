@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,500;1,600;1,700&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  body{margin:0;background:#cdd4da;font-family:'Archivo',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;}
+  *{box-sizing:border-box;}
+  p{margin:0;}
+</style>
+</helmet>
+
+<div ref="{{ setRoot }}" style="--ink:#1E5373; --blue:#3199D8; --text:#23303a; --muted:#5d6c78; --rule:#c7d2db; --tint:#eaf1f8; --tintln:#cfe0f0; width:816px; min-height:1056px; margin:26px auto; background:#fff; box-shadow:0 12px 40px rgba(30,55,85,.22); padding:48px; display:flex; flex-direction:column; color:var(--text); font-size:13.5px; line-height:1.5;">
+
+  <!-- ============ MASTHEAD ============ -->
+  <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:18px; padding-bottom:9px;">
+    <div style="display:flex; align-items:center; gap:13px;">
+      <img src="uploads/tda-anchor-cut.png" alt="TDA anchor logo" style="width:46px; height:46px; object-fit:contain; flex:none;">
+      <div>
+        <div style="font-family:'Playfair Display',serif; line-height:.92; letter-spacing:.3px;">
+          <span style="font-weight:800; font-size:37px; color:var(--ink);">TDA</span><span style="font-style:italic; font-weight:700; font-size:37px; color:var(--blue);"> Currents</span>
+        </div>
+        <div style="margin-top:5px; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted);">Keeping our community connected on the water</div>
+      </div>
+    </div>
+    <div style="text-align:right; padding-bottom:2px;">
+      <div style="font-family:'Playfair Display',serif; font-weight:800; font-size:21px; color:var(--ink); line-height:1;">JULY 2026</div>
+      <div style="margin-top:4px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted);">Issue No. 1</div>
+    </div>
+  </div>
+
+  <svg width="100%" height="12" style="display:block; margin-top:6px; color:var(--blue);" aria-hidden="true">
+    <defs>
+      <pattern id="mw-a" width="26" height="12" patternUnits="userSpaceOnUse">
+        <path d="M0 6 q6.5 -5 13 0 t13 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path>
+      </pattern>
+    </defs>
+    <rect width="100%" height="12" fill="url(#mw-a)"></rect>
+  </svg>
+
+  <!-- ============ HERO ============ -->
+  <div style="margin-top:16px; position:relative; line-height:0;">
+    <img src="uploads/currents-hero.png" alt="Tomahawk Island moorage with Mt. Hood" style="display:block; width:100%; height:auto;" data-comment-anchor="6ac5f500-hero">
+    <img src="uploads/tda-vector-logo.png" alt="Tomahawk Island Floating Home Community — Established 1999" style="position:absolute; left:2.2%; top:7%; width:20.5%; height:auto; filter:drop-shadow(0 3px 9px rgba(20,55,85,.3));">
+  </div>
+
+  <!-- ============ BODY ============ -->
+  <div style="display:flex; gap:26px; margin-top:20px; flex:1; align-items:stretch;">
+
+    <!-- LEFT — Neighbor Spotlight -->
+    <div style="flex:1.48; min-width:0; display:flex; flex-direction:column;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+        <span style="font-weight:700; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#2E8FCD; white-space:nowrap;">Spotlight</span>
+        <span style="flex:1; height:1.5px; background:#2E8FCD; opacity:.85;"></span>
+        <i data-lucide="users" width="17" height="17" stroke-width="2" style="color:#2E8FCD; flex:none;"></i>
+      </div>
+
+      <h2 style="margin:0 0 9px; font-family:'Playfair Display',serif; font-weight:800; font-size:25px; line-height:1.08; color:var(--ink);">New Faces at Slip 510</h2>
+
+      <div style="font-size:13.5px; line-height:1.58; color:var(--text); overflow:hidden;">
+        <div style="float:left; width:153px; margin:3px 15px 9px 0; position:relative; border:1px solid var(--rule); line-height:0;">
+          <img src="uploads/josh-talia.jpg" alt="Josh, Talia, and Zeke at slip 510" style="display:block; width:100%; height:204px; object-fit:cover; object-position:center 28%;">
+          <div style="position:absolute; left:0; right:0; bottom:0; background:var(--ink); color:#fff; font-size:9.5px; font-weight:600; letter-spacing:.3px; padding:3px 8px; line-height:1.25;">Josh, Talia, and Zeke</div>
+        </div>
+        <p style="margin-bottom:9px;">The moorage welcomes three new faces at slip 510: <strong style="color:var(--ink);">Josh</strong>, his partner <strong style="color:var(--ink);">Talia</strong>, and <strong style="color:var(--ink);">Zeke</strong>, their easygoing dog. Renting from Thea Hosford and friends of Bill and Trudy Bowling, the couple may be familiar to you already.</p>
+        <p style="margin-bottom:9px;">Talia, from North Carolina, teaches animal behavior and veterinary science and is a self&#8209;described workaholic, so that&rsquo;s likely her walking the dog at dawn. Josh, recently retired from landlocked Alberta, is an adventure junkie thrilled to live on the water.</p>
+        <p style="margin-bottom:0;">Zeke, Josh&rsquo;s diabetic service dog, tags along everywhere and is as friendly as they come. Say hello if you see them around the docks.</p>
+      </div>
+
+    </div>
+
+    <!-- RIGHT — Committee + Calendar -->
+    <div style="flex:1; min-width:0; display:flex; flex-direction:column;">
+
+      <!-- Committee Highlights -->
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+        <span style="font-weight:700; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#2E8FCD; white-space:nowrap;">Committee Highlights</span>
+        <span style="flex:1; height:1.5px; background:#2E8FCD; opacity:.85;"></span>
+        <i data-lucide="clipboard-list" width="17" height="17" stroke-width="2" style="color:#2E8FCD; flex:none;"></i>
+      </div>
+
+      <div style="font-size:13px; line-height:1.5;">
+        <div style="display:flex; gap:10px;">
+          <i data-lucide="wrench" width="16" height="16" stroke-width="2" style="color:var(--ink); flex:none; margin-top:2px;"></i>
+          <p style="margin:0;"><strong style="color:var(--ink);">Docks &amp; Maintenance.</strong> New solar path lights are up along the main walkway&mdash;brighter evenings, no wiring. Fresh decking lands on Finger C in August.</p>
+        </div>
+        <div style="height:1px; background:var(--rule); margin:11px 0;"></div>
+        <div style="display:flex; gap:10px;">
+          <i data-lucide="party-popper" width="16" height="16" stroke-width="2" style="color:var(--ink); flex:none; margin-top:2px;"></i>
+          <p style="margin:0;"><strong style="color:var(--ink);">Social Committee.</strong> Eighty neighbors turned out for June&rsquo;s dock potluck. The sunset cruise sign&#8209;up sheet goes live mid&#8209;month at the clubhouse.</p>
+        </div>
+      </div>
+
+      <!-- On the Calendar -->
+      <div style="display:flex; align-items:center; gap:10px; margin:20px 0 11px;">
+        <span style="font-weight:700; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#2E8FCD; white-space:nowrap;">On the Calendar</span>
+        <span style="flex:1; height:1.5px; background:#2E8FCD; opacity:.85;"></span>
+        <i data-lucide="calendar-days" width="17" height="17" stroke-width="2" style="color:#2E8FCD; flex:none;"></i>
+      </div>
+
+      <div style="display:flex; gap:12px; align-items:flex-start;">
+        <div style="flex:none; width:50px; border:1.5px solid var(--ink); text-align:center; overflow:hidden;">
+          <div style="background:var(--ink); color:#fff; font-size:9px; font-weight:800; letter-spacing:1.5px; padding:2px 0;">AUG</div>
+          <div style="font-family:'Playfair Display',serif; font-weight:800; font-size:23px; color:var(--ink); line-height:1.15; padding-bottom:5px;">12</div>
+        </div>
+        <p style="margin:0; font-size:12.5px; line-height:1.42;"><strong style="color:var(--ink);">Board Meeting</strong><br>6:30 PM &middot; Clubhouse<br>Coffee &amp; pastries from 6:15.<br><span style="color:var(--muted);">All members welcome.</span></p>
+      </div>
+      <div style="height:1px; background:var(--rule); margin:11px 0;"></div>
+      <div style="display:flex; gap:12px; align-items:flex-start;">
+        <div style="flex:none; width:50px; border:1.5px solid var(--ink); text-align:center; overflow:hidden;">
+          <div style="background:var(--ink); color:#fff; font-size:9px; font-weight:800; letter-spacing:1.5px; padding:2px 0;">SEP</div>
+          <div style="font-family:'Playfair Display',serif; font-weight:800; font-size:23px; color:var(--ink); line-height:1.15; padding-bottom:5px;">27</div>
+        </div>
+        <p style="margin:0; font-size:12.5px; line-height:1.42;"><strong style="color:var(--ink);">Annual Progressive Dinner</strong><br>5:00 PM &middot; Start at A&#8209;Dock<br>Three courses, three docks.<br><span style="color:var(--muted);">Bring a dish to share.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Friendly Reminder (full width) -->
+  <div style="margin-top:16px;">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:11px;">
+      <span style="font-weight:700; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#2E8FCD; white-space:nowrap;">Friendly Reminder</span>
+      <span style="flex:1; height:1.5px; background:#2E8FCD; opacity:.85;"></span>
+      <i data-lucide="paw-print" width="17" height="17" stroke-width="2" style="color:#2E8FCD; flex:none;"></i>
+    </div>
+    <div style="display:flex; gap:13px; align-items:center;">
+      <p style="margin:0; font-size:12.5px; line-height:1.48;"><strong style="color:var(--ink); font-size:13.5px;">Leashes, please.</strong> Our docks are shared&mdash;keep pups leashed on common walkways and scoop the loop. Thanks for keeping the boards friendly for every neighbor (and every gull).</p>
+    </div>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <div style="margin-top:18px; border-top:3px solid var(--ink); background:var(--tint); padding:15px 18px; display:flex; align-items:center; gap:26px;">
+    <div style="flex:1; min-width:0; display:flex; align-items:center; gap:13px;">
+      <img src="uploads/tda-anchor-cut.png" alt="TDA anchor logo" style="width:40px; height:40px; object-fit:contain; flex:none;">
+      <div style="line-height:1.45;">
+        <div style="font-size:14px; font-weight:800; color:var(--ink);">Stay Informed</div>
+        <div style="font-size:12px; color:var(--text);">Your neighbors, your calendar, and the notices worth knowing</div>
+        <div style="font-size:12.5px; font-weight:600; color:var(--blue); letter-spacing:.2px;">https://tomahawkdestiny.com</div>
+      </div>
+    </div>
+    <div style="flex:none; text-align:right; line-height:1.55;">
+      <div style="font-size:9.5px; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; color:var(--muted); margin-bottom:3px;">Reach the Committees</div>
+      <div style="font-size:11.5px; font-weight:600; color:var(--blue); letter-spacing:.2px;">community@tomahawkdestiny.com</div>
+      <div style="font-size:11.5px; font-weight:600; color:var(--blue); letter-spacing:.2px;">maintenance@tomahawkdestiny.com</div>
+      <div style="font-size:11.5px; font-weight:600; color:var(--blue); letter-spacing:.2px;">epic@tomahawkdestiny.com</div>
+      <div style="font-size:11.5px; font-weight:600; color:var(--blue); letter-spacing:.2px;">finance@tomahawkdestiny.com</div>
+      <div style="font-size:11.5px; font-weight:600; color:var(--blue); letter-spacing:.2px;">arc@tomahawkdestiny.com</div>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--tintln); padding:7px 18px; text-align:center; font-size:10px; color:var(--muted); letter-spacing:.2px;">Tomahawk Island Floating Home Community &bull; 288 N Tomahawk Island Drive, Portland, OR 97217 &bull; (503) 735&#8209;3057</div>
+
+</div>
+
+<!-- ============================================================ PAGE 2 ============================================================ -->
+<div ref="{{ setRoot }}" style="--ink:#1E5373; --blue:#3199D8; --text:#23303a; --muted:#5d6c78; --rule:#c7d2db; --tint:#eaf1f8; --tintln:#cfe0f0; width:816px; min-height:1056px; margin:26px auto; background:#fff; box-shadow:0 12px 40px rgba(30,55,85,.22); padding:48px; display:flex; flex-direction:column; color:var(--text); font-size:13.5px; line-height:1.5;">
+
+  <!-- ===== RUNNING HEAD ===== -->
+  <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:18px; padding-bottom:9px;">
+    <div style="display:flex; align-items:center; gap:11px;">
+      <img src="uploads/tda-anchor-cut.png" alt="TDA anchor logo" style="width:34px; height:34px; object-fit:contain; flex:none;">
+      <div style="font-family:'Playfair Display',serif; line-height:1; letter-spacing:.3px;">
+        <span style="font-weight:800; font-size:22px; color:var(--ink);">TDA</span><span style="font-style:italic; font-weight:700; font-size:22px; color:var(--blue);"> Currents</span>
+      </div>
+    </div>
+    <div style="font-size:10px; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; color:var(--muted); padding-bottom:2px;">July 2026 &nbsp;&middot;&nbsp; Issue No. 1</div>
+  </div>
+
+  <svg width="100%" height="12" style="display:block; margin-top:6px; color:var(--blue);" aria-hidden="true">
+    <defs>
+      <pattern id="mw-b" width="26" height="12" patternUnits="userSpaceOnUse">
+        <path d="M0 6 q6.5 -5 13 0 t13 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path>
+      </pattern>
+    </defs>
+    <rect width="100%" height="12" fill="url(#mw-b)"></rect>
+  </svg>
+
+  <!-- ===== SECTION GRID ===== -->
+  <div style="display:flex; flex-direction:column; gap:24px; margin-top:22px; flex:1;">
+
+    <!-- ROW 1: Q&A | All Hands on Deck -->
+    <div style="display:flex; gap:26px; align-items:stretch;">
+
+      <!-- Q&A -->
+      <div style="flex:1; min-width:0; display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <span style="font-weight:700; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#2E8FCD; white-space:nowrap;">Current Questions</span>
+          <span style="flex:1; height:1.5px; background:#2E8FCD; opacity:.85;"></span>
+          <i data-lucide="messages-square" width="17" height="17" stroke-width="2" style="color:#2E8FCD; flex:none;"></i>
+        </div>
+        <div style="display:flex; gap:11px; align-items:flex-start; margin-bottom:10px;">
+          <span style="font-family:'Playfair Display',serif; font-weight:800; font-size:20px; color:var(--blue); line-height:1; flex:none;">Q</span>
+          <div>
+            <p style="margin:0; font-size:13px; line-height:1.55;">Is it normal for my home to creak and shift more once the cold weather sets in?</p>
+            <p style="margin:4px 0 0; font-size:11px; font-style:italic; color:var(--muted);">&mdash; Marian Holt, Finger&nbsp;D</p>
+          </div>
+        </div>
+        <div style="display:flex; gap:11px; align-items:flex-start;">
+          <span style="font-family:'Playfair Display',serif; font-weight:800; font-size:20px; color:var(--ink); line-height:1; flex:none;">A</span>
+          <div>
+            <p style="margin:0; font-size:13px; line-height:1.55;">Completely normal, and nothing to worry about. Floats and walkways are built to flex as water temperature, wind, and river levels change through the seasons, so a little creaking and settling is just your home doing its job. You&rsquo;ll usually hear it most on the first cold snap of the year and again when the spring runoff raises the river. If a gangway or ramp starts to sit noticeably unevenly, sticks when you walk it, or a door suddenly won&rsquo;t latch, log it with Maintenance and we&rsquo;ll come re&#8209;trim the floats and check the connections.</p>
+            <p style="margin:4px 0 0; font-size:11px; font-style:italic; color:var(--muted);">&mdash; Dale Whitcomb, Dock Committee</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="width:1px; background:var(--rule); flex:none;"></div>
+
+      <!-- All Hands on Deck -->
+      <div style="flex:1; min-width:0; display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <span style="font-weight:700; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#2E8FCD; white-space:nowrap;">All Hands on Deck</span>
+          <span style="flex:1; height:1.5px; background:#2E8FCD; opacity:.85;"></span>
+          <i data-lucide="hand-helping" width="17" height="17" stroke-width="2" style="color:#2E8FCD; flex:none;"></i>
+        </div>
+        <p style="margin:0 0 12px; font-size:13px; line-height:1.55;">Two ways to pitch in this issue&mdash;a little time keeps the newsletter on every doorstep.</p>
+        <div style="display:flex; gap:11px; align-items:flex-start;">
+          <i data-lucide="printer" width="18" height="18" stroke-width="2" style="color:var(--ink); flex:none; margin-top:2px;"></i>
+          <p style="margin:0; font-size:12.5px; line-height:1.5;"><strong style="color:var(--ink);">Monthly print run.</strong> Pick up the printed copies from our shop in Vancouver once a month. In&#8209;person pickup only.</p>
+        </div>
+        <div style="height:1px; background:var(--rule); margin:12px 0;"></div>
+        <div style="display:flex; gap:11px; align-items:flex-start;">
+          <i data-lucide="footprints" width="18" height="18" stroke-width="2" style="color:var(--ink); flex:none; margin-top:2px;"></i>
+          <p style="margin:0; font-size:12.5px; line-height:1.5;"><strong style="color:var(--ink);">Door&#8209;to&#8209;door delivery.</strong> A small crew to walk the docks and drop a copy at each home. Many hands, quick work.</p>
+        </div>
+        <div style="height:1px; background:var(--rule); margin:12px 0;"></div>
+        <div style="display:flex; gap:11px; align-items:flex-start;">
+          <i data-lucide="camera" width="18" height="18" stroke-width="2" style="color:var(--ink); flex:none; margin-top:2px;"></i>
+          <p style="margin:0; font-size:12.5px; line-height:1.5;"><strong style="color:var(--ink);">Dock photographer.</strong> Snap a few candids at gatherings and around the moorage so we&rsquo;ve got fresh images for future issues.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 2: Shout-Outs (full width, tinted) -->
+    <div style="background:var(--tint); padding:17px 18px 18px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+        <span style="font-weight:700; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#2E8FCD; white-space:nowrap;">Shout&#8209;Outs</span>
+        <span style="flex:1; height:1.5px; background:#2E8FCD; opacity:.85;"></span>
+        <i data-lucide="heart" width="17" height="17" stroke-width="2" style="color:#2E8FCD; flex:none;"></i>
+      </div>
+      <div style="display:flex; gap:11px; align-items:flex-start;">
+        <i data-lucide="anchor" width="18" height="18" stroke-width="2" style="color:var(--ink); flex:none; margin-top:2px;"></i>
+        <p style="margin:0; font-size:13px; line-height:1.55;">A big thank&#8209;you to <strong style="color:var(--ink);">Greg Korn</strong> and <strong style="color:var(--ink);">Russell Menenberg</strong> for keeping the dock carts wrangled, repaired, and right&#8209;side&#8209;up all season. The whole moorage notices.</p>
+      </div>
+    </div>
+
+    <!-- ROW 3: Dock Talk | Sponsor -->
+    <div style="display:flex; gap:26px; align-items:stretch;">
+
+      <!-- Dock Talk -->
+      <div style="flex:1; min-width:0; display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <span style="font-weight:700; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#2E8FCD; white-space:nowrap;">Dock Talk</span>
+          <span style="flex:1; height:1.5px; background:#2E8FCD; opacity:.85;"></span>
+          <i data-lucide="lightbulb" width="17" height="17" stroke-width="2" style="color:#2E8FCD; flex:none;"></i>
+        </div>
+        <div style="font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:var(--muted); margin-bottom:7px;">Did you know?</div>
+        <div style="display:flex; gap:11px; align-items:flex-start;">
+          <i data-lucide="waves" width="18" height="18" stroke-width="2" style="color:var(--ink); flex:none; margin-top:2px;"></i>
+          <p style="margin:0; font-size:13px; line-height:1.55;">A spritz of <strong style="color:var(--ink);">Pine&#8209;Sol</strong> around the base of your home helps keep curious river otters from settling in underneath. Reapply after heavy rain.</p>
+        </div>
+      </div>
+
+      <div style="width:1px; background:var(--rule); flex:none;"></div>
+
+      <!-- Sponsor / Ad -->
+      <div style="flex:1; min-width:0; display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <span style="font-weight:700; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#2E8FCD; white-space:nowrap;">Community Sponsor</span>
+          <span style="flex:1; height:1.5px; background:#2E8FCD; opacity:.85;"></span>
+          <i data-lucide="megaphone" width="17" height="17" stroke-width="2" style="color:#2E8FCD; flex:none;"></i>
+        </div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; border:1.5px dashed var(--tintln); padding:16px; text-align:center;">
+          <div style="font-family:'Playfair Display',serif; font-weight:800; font-size:19px; color:var(--ink); line-height:1.1;">Lingua Ink Media</div>
+          <div style="margin-top:5px; font-size:12px; color:var(--text);">We build and refresh websites for your custom needs.</div>
+          <div style="margin-top:7px; font-size:12px; font-weight:600; color:var(--blue); letter-spacing:.2px;">https://linguainkmedia.com</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== SUBMIT BAND (full width) ===== -->
+  <div style="border-top:2.5px solid var(--blue); margin-top:22px; padding-top:14px; text-align:center;">
+    <p style="margin:0; font-size:13.5px; line-height:1.5;">Have photos, tips, or questions? Send them to <span style="color:var(--blue); font-weight:700;">community@tomahawkdestiny.com</span></p>
+  </div>
+
+  <!-- ============ FOOTER (repeat) ============ -->
+  <div style="margin-top:18px; border-top:3px solid var(--ink); background:var(--tint); padding:15px 18px; display:flex; align-items:center; gap:26px;">
+    <div style="flex:1; min-width:0; display:flex; align-items:center; gap:13px;">
+      <img src="uploads/tda-anchor-cut.png" alt="TDA anchor logo" style="width:40px; height:40px; object-fit:contain; flex:none;">
+      <div style="line-height:1.45;">
+        <div style="font-size:14px; font-weight:800; color:var(--ink);">Stay Informed</div>
+        <div style="font-size:12px; color:var(--text);">Your neighbors, your calendar, and the notices worth knowing</div>
+        <div style="font-size:12.5px; font-weight:600; color:var(--blue); letter-spacing:.2px;">https://tomahawkdestiny.com</div>
+      </div>
+    </div>
+    <div style="flex:none; text-align:right; line-height:1.55;">
+      <div style="font-size:9.5px; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; color:var(--muted); margin-bottom:3px;">Reach the Committees</div>
+      <div style="font-size:11.5px; font-weight:600; color:var(--blue); letter-spacing:.2px;">community@tomahawkdestiny.com</div>
+      <div style="font-size:11.5px; font-weight:600; color:var(--blue); letter-spacing:.2px;">maintenance@tomahawkdestiny.com</div>
+      <div style="font-size:11.5px; font-weight:600; color:var(--blue); letter-spacing:.2px;">epic@tomahawkdestiny.com</div>
+      <div style="font-size:11.5px; font-weight:600; color:var(--blue); letter-spacing:.2px;">finance@tomahawkdestiny.com</div>
+      <div style="font-size:11.5px; font-weight:600; color:var(--blue); letter-spacing:.2px;">arc@tomahawkdestiny.com</div>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--tintln); padding:7px 18px; text-align:center; font-size:10px; color:var(--muted); letter-spacing:.2px;">Tomahawk Island Floating Home Community &bull; 288 N Tomahawk Island Drive, Portland, OR 97217 &bull; (503) 735&#8209;3057</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 868, &quot;height&quot;: 1110 },
+  &quot;grayscale&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot; },
+  &quot;ink&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#1E5373&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;accent&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#3199D8&quot;, &quot;tsType&quot;: &quot;string&quot; }
+}">
+class Component extends DCLogic {
+  _roots = [];
+  setRoot = (el) => { if (el && !this._roots.includes(el)) this._roots.push(el); this.applyTheme(); };
+
+  applyTheme() {
+    this._roots.forEach((root) => {
+      if (!root) return;
+      if (this.props.ink) root.style.setProperty('--ink', this.props.ink);
+      if (this.props.accent) root.style.setProperty('--blue', this.props.accent);
+      root.style.filter = (this.props.grayscale ? 'grayscale(1)' : 'none');
+    });
+  }
+
+  drawIcons() {
+    let tries = 0;
+    const go = () => {
+      if (window.lucide) { try { window.lucide.createIcons(); } catch (e) {} }
+      else if (tries++ < 25) { setTimeout(go, 150); }
+    };
+    go();
+  }
+
+  componentDidMount() { this.applyTheme(); this.drawIcons(); }
+  componentDidUpdate() { this.applyTheme(); this.drawIcons(); }
+
+  renderVals() {
+    return { setRoot: this.setRoot };
+  }
+}
+</script>
+</body>
+</html>
