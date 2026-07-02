@@ -275,7 +275,7 @@ $houseAd = $settings['house_ad'] ?? [];
         </div>
         <div class="field">
           <label>Answer</label>
-          <textarea name="flex[qa][answer]" rows="6" maxlength="580" data-count="1"><?= e($flex['qa']['answer'] ?? '') ?></textarea>
+          <textarea name="flex[qa][answer]" rows="6" maxlength="490" data-count="1"><?= e($flex['qa']['answer'] ?? '') ?></textarea>
         </div>
         <div class="field">
           <label>Answered by</label>
@@ -293,7 +293,7 @@ $houseAd = $settings['house_ad'] ?? [];
         <div class="field">
           <label>Body <span class="hint">(Enter starts a new paragraph)</span></label>
           <?php rich_field('flex[editorial][body]', $flex['editorial']['body'] ?? '', true,
-              ['limits' => ['none' => 885, 'portrait-float' => 850, 'landscape-banner' => 415]]); ?>
+              ['limits' => ['none' => 885, 'portrait-float' => 850, 'landscape-banner' => 500]]); ?>
         </div>
       </div>
     </section>
@@ -317,7 +317,7 @@ $houseAd = $settings['house_ad'] ?? [];
         <?php endforeach; ?>
       </div>
       <button type="button" class="btn btn-small" id="ah-add">Add an item</button>
-      <div class="char-count" data-group-counter="ah" data-group-max="850" data-group-label="intro + all items"></div>
+      <div class="char-count" data-group-counter="ah" data-group-max="650" data-group-label="intro + all items"></div>
     </section>
 
     <section class="ed-section">
@@ -375,7 +375,7 @@ $houseAd = $settings['house_ad'] ?? [];
             <input type="text" name="sponsor[ad][tagline]" value="<?= e($sponsor['ad']['tagline'] ?? '') ?>">
           </div>
           <div class="field">
-            <label>URL</label>
+            <label>URL or Phone number</label>
             <input type="text" name="sponsor[ad][url]" value="<?= e($sponsor['ad']['url'] ?? '') ?>">
           </div>
         </div>

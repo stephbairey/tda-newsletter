@@ -341,11 +341,11 @@ text, per above. The caps (defined in `templates/editor.php`):
 - Headlines (Spotlight, Editorial): 10–30 chars; the printed headline is **one line, no
   wrap** (`white-space: nowrap`), which is what forces brevity.
 - Spotlight body: 1200 no photo / 850 portrait / 650 landscape (the cap follows the photo
-  toggle and treatment). Editorial body: 885 / 850 / 415. Captions: 50.
+  toggle and treatment). Editorial body: 885 / 850 / 500. Captions: 50.
 - Committee Highlights item text: 150 each. Calendar: title/note/call-to-action 30, place 25.
 - Friendly Reminder: lead-in + text **combined** 125.
-- Q&A: question 300, answer 580, attributions 30 (the em-dash is added by the template).
-- All Hands: intro + all items **combined** 850 (combined because the item count varies).
+- Q&A: question 300, answer 490, attributions 30 (the em-dash is added by the template).
+- All Hands: intro + all items **combined** 650 (combined because the item count varies).
 - Shout-Outs: 230. Dock Talk tip: 200.
 
 The caps were each calibrated against otherwise-normal issue content; maxing every page-2
