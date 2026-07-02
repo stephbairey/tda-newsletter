@@ -26,7 +26,6 @@ $img = $sp['image'] ?? [];
 
   <div class="hero">
     <img class="hero-img" src="assets/currents-hero.png" alt="Tomahawk Island moorage with Mt. Hood">
-    <img class="hero-logo" src="assets/tda-vector-logo.png" alt="Tomahawk Island Floating Home Community — Established 1999">
   </div>
 
   <div class="p1-body">

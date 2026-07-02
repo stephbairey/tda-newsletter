@@ -103,7 +103,7 @@ tda-newsletter/
 ├── css/               # [deploy]
 ├── js/                # [deploy]
 ├── icons/svg/         # [deploy] the editor-selectable SVG set
-├── assets/            # [deploy] anchor-logo.svg, tda-vector-logo.png, currents-hero.png
+├── assets/            # [deploy] anchor-logo.svg, currents-hero.png
 ├── uploads/           # [local]  CMS writes this on the server; seed only (josh-talia.jpg)
 ├── data/              # [local]  CMS writes this on the server; per-issue JSON
 └── reference/         # [local]  .dc.html, README.md, page screenshots. Never deploys.
@@ -278,9 +278,10 @@ bounded, and copyfitting still works. Uploaded originals land in `uploads/`.
   - `anchor-logo.svg` — the anchor mark for the masthead and both footers. **Replaces the
     handoff's `tda-anchor-cut.png`.** The design reference and the `.dc.html` both point at the
     old PNG; use this SVG instead and repoint. Vector, so it stays crisp at any print size.
-  - `tda-vector-logo.png` — the full logo overlaid on the hero.
   - `currents-hero.png` — the Mt. Hood masthead banner, already preprocessed and sized for
-    print. Treated as a fixed banner, not per-issue content.
+    print, with the oval Tomahawk Island logo baked into the image (no separate overlay;
+    the handoff's `tda-vector-logo.png` was removed). Treated as a fixed banner, not
+    per-issue content.
 - `/icons/svg` (static, deploys): the editor-selectable SVG icon set (section 16).
 - `/uploads` (CMS content, excluded from deploy):
   - `josh-talia.jpg` — the issue-one Spotlight photo. Spotlight photos are per-issue, so they
