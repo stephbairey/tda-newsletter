@@ -71,7 +71,7 @@ function image_field(string $prefix, array $img, string $defaultTreatment): void
             <input type="text" name="<?= e($prefix) ?>[caption]" value="<?= e($img['caption'] ?? '') ?>">
           </div>
           <div class="field">
-            <label>Upload a new photo (JPG, PNG, or WebP)</label>
+            <label>Upload a new photo (JPG, PNG, or WebP). Best size: 150x200 px, 300 dpi.</label>
             <input type="file" class="photo-upload" accept="image/jpeg,image/png,image/webp">
             <span class="photo-upload-status"></span>
           </div>
@@ -176,11 +176,14 @@ $houseAd = $settings['house_ad'] ?? [];
         <h2 class="ed-title">On the Calendar</h2>
         <?php icon_field('calendar[icon]', $issue['calendar']['icon'] ?? 'calendar', 'Section icon'); ?>
       </div>
-      <p class="ed-note">Always exactly two events.</p>
-      <?php foreach (array_slice($issue['calendar']['events'], 0, 2) as $i => $ev): ?>
+      <p class="ed-note">Always exactly two events. Use a 3-letter abbreviation for the month (&lsquo;AUG&rsquo;) and a numerical date (&lsquo;4&rsquo;).</p>
+      <?php foreach (array_slice($issue['calendar']['events'], 0, 2) as $i => $ev):
+          // Stored as one "time · place" line; split for editing, rejoined on save.
+          $ww = explode(' · ', $ev['when_where'] ?? '', 2);
+      ?>
       <div class="cal-item">
         <div class="field field-narrow">
-          <label>Month (3 letters)</label>
+          <label>Month</label>
           <input type="text" name="calendar[events][<?= $i ?>][month]" maxlength="4" value="<?= e($ev['month'] ?? '') ?>">
         </div>
         <div class="field field-narrow">
@@ -194,15 +197,21 @@ $houseAd = $settings['house_ad'] ?? [];
           </div>
           <div class="field-row">
             <div class="field">
-              <label>Time · place</label>
-              <input type="text" name="calendar[events][<?= $i ?>][when_where]" value="<?= e($ev['when_where'] ?? '') ?>">
+              <label>Time</label>
+              <input type="text" name="calendar[events][<?= $i ?>][when]" value="<?= e($ww[0] ?? '') ?>">
             </div>
+            <div class="field">
+              <label>Place</label>
+              <input type="text" name="calendar[events][<?= $i ?>][where]" value="<?= e($ww[1] ?? '') ?>">
+            </div>
+          </div>
+          <div class="field-row">
             <div class="field">
               <label>Note</label>
               <input type="text" name="calendar[events][<?= $i ?>][note]" value="<?= e($ev['note'] ?? '') ?>">
             </div>
             <div class="field">
-              <label>Gray note</label>
+              <label>Call to action</label>
               <input type="text" name="calendar[events][<?= $i ?>][muted_note]" value="<?= e($ev['muted_note'] ?? '') ?>">
             </div>
           </div>

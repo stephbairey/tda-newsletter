@@ -97,7 +97,12 @@ function sanitize_issue(array $in): array {
                 'month'      => strtoupper(substr(plain($e['month'] ?? ''), 0, 4)),
                 'day'        => substr(plain($e['day'] ?? ''), 0, 2),
                 'title'      => plain($e['title'] ?? ''),
-                'when_where' => plain($e['when_where'] ?? ''),
+                // The editor posts time and place separately; the newsletter
+                // renders them as one "time · place" line.
+                'when_where' => implode(' · ', array_filter(
+                    [plain($e['when'] ?? ''), plain($e['where'] ?? '')],
+                    fn(string $v) => $v !== ''
+                )),
                 'note'       => plain($e['note'] ?? ''),
                 'muted_note' => plain($e['muted_note'] ?? ''),
             ]),
