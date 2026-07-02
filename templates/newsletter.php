@@ -29,8 +29,29 @@ $grayscale = !empty($_GET['bw']);
 
 <?php if (!empty($_GET['measure'])): ?>
 <script>
+// Natural height of a sheet, including content that fixed-height or clipped
+// boxes are hiding: with the sheet freed to grow, take the deepest of the
+// sheet itself, every descendant's bottom edge, and every descendant's
+// scrollHeight (text overflowing a fixed box grows scrollHeight, not rects).
+function tdaSheetNatural(s) {
+  var prev = s.style.height;
+  s.style.height = 'auto';
+  var rect = s.getBoundingClientRect();
+  var deepest = rect.height;
+  s.querySelectorAll('*').forEach(function (el) {
+    var r = el.getBoundingClientRect();
+    if (r.width === 0 && r.height === 0) return;
+    var b = r.bottom - rect.top;
+    if (el.scrollHeight > el.clientHeight + 1) {
+      b = Math.max(b, r.top - rect.top + el.scrollHeight);
+    }
+    if (b > deepest) deepest = b;
+  });
+  s.style.height = prev;
+  return Math.round(deepest);
+}
 function tdaMeasure() {
-  var out = [];
+  var out = [], pages = [];
   document.querySelectorAll('.sheet').forEach(function (s, i) {
     var kids = [];
     Array.prototype.forEach.call(s.children, function (c) {
@@ -39,24 +60,15 @@ function tdaMeasure() {
       var mt = parseFloat(st.marginTop) || 0, mb = parseFloat(st.marginBottom) || 0;
       kids.push((c.getAttribute('class') || c.tagName).split(' ')[0] + ':' + Math.round(r.height + mt + mb));
     });
-    var prev = s.style.height;
-    s.style.height = 'auto';
-    var natural = s.getBoundingClientRect().height;
-    s.style.height = prev;
-    out.push('sheet' + (i + 1) + ' natural=' + Math.round(natural) + '/1056 [' + kids.join(' ') + ']');
+    var natural = tdaSheetNatural(s);
+    pages.push(natural);
+    out.push('sheet' + (i + 1) + ' natural=' + natural + '/1056 [' + kids.join(' ') + ']');
   });
   var el = document.getElementById('measure-out');
   if (!el) { el = document.createElement('div'); el.id = 'measure-out'; document.body.appendChild(el); }
   el.textContent = 'MEASURE: ' + out.join(' || ');
   if (window.parent !== window) {
     // Embedded by the editor for its overflow check.
-    var pages = [];
-    document.querySelectorAll('.sheet').forEach(function (s) {
-      var prev = s.style.height;
-      s.style.height = 'auto';
-      pages.push(Math.round(s.getBoundingClientRect().height));
-      s.style.height = prev;
-    });
     window.parent.postMessage({ tda: 'fit', pages: pages, limit: 1056 }, '*');
   }
 }

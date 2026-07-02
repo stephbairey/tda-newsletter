@@ -8,11 +8,13 @@ $s = $settings;
   <h1 class="admin-h1">Settings</h1>
   <p class="admin-note">These change about once a year. They appear on every issue, so edit with care.</p>
 
-  <?php if (!empty($_GET['saved'])): ?>
+  <?php if (!empty($_GET['hero_error'])): ?>
+  <div class="notice notice-error">Masthead image: <?= e($_GET['hero_error']) ?> (Other settings were saved.)</div>
+  <?php elseif (!empty($_GET['saved'])): ?>
   <div class="notice notice-ok">Settings saved.</div>
   <?php endif; ?>
 
-  <form method="post" action="?action=save_settings" class="settings-form">
+  <form method="post" action="?action=save_settings" class="settings-form" enctype="multipart/form-data">
     <div class="field">
       <label>Tagline (masthead)</label>
       <input type="text" name="tagline" value="<?= e($s['tagline'] ?? '') ?>">
@@ -57,6 +59,16 @@ $s = $settings;
         <label>Email (shown in blue)</label>
         <input type="text" name="submit_email" value="<?= e($s['submit_email'] ?? '') ?>">
       </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Masthead image (page 1 hero)</legend>
+      <img class="hero-preview" src="<?= e(hero_src()) ?>" alt="Current masthead image">
+      <div class="field">
+        <label>Upload a replacement (JPG, PNG, or WebP; at least 1500px wide, 2250px prints best)</label>
+        <input type="file" name="hero" accept="image/jpeg,image/png,image/webp">
+      </div>
+      <p class="ed-note">Replaces the image on every issue, past and future. Only the latest upload is kept.</p>
     </fieldset>
 
     <fieldset>

@@ -8,13 +8,23 @@
  */
 $adminTitle = 'Edit ' . ($issue['issue']['date_label'] ?? $issueId);
 
-/** Rich text widget. $multi allows paragraphs (Enter); single-line fields don't. */
-function rich_field(string $name, string $value, bool $multi = false): void {
+/**
+ * Rich text widget. $multi allows paragraphs (Enter); single-line fields don't.
+ * $opts feeds the character-limit engine in editor.js:
+ *   'max'    => int     hard cap on visible characters
+ *   'group'  => string  shares a combined cap with other fields (see data-group-counter)
+ *   'limits' => array   photo-dependent caps, keyed 'none' / treatment name
+ */
+function rich_field(string $name, string $value, bool $multi = false, array $opts = []): void {
     $display = $multi
         ? rich_paras($value)
         : rich($value);
+    $attrs = '';
+    if (isset($opts['max']))    $attrs .= ' data-max="' . (int)$opts['max'] . '"';
+    if (isset($opts['group']))  $attrs .= ' data-group="' . e($opts['group']) . '"';
+    if (isset($opts['limits'])) $attrs .= " data-limits='" . json_encode($opts['limits']) . "'";
     ?>
-    <div class="rich <?= $multi ? 'rich-multi' : 'rich-single' ?>">
+    <div class="rich <?= $multi ? 'rich-multi' : 'rich-single' ?>"<?= $attrs ?>>
       <div class="rich-toolbar">
         <button type="button" class="rich-btn" data-cmd="bold" title="Bold"><strong>B</strong></button>
         <button type="button" class="rich-btn" data-cmd="italic" title="Italic"><em>I</em></button>
@@ -68,10 +78,10 @@ function image_field(string $prefix, array $img, string $defaultTreatment): void
           </div>
           <div class="field">
             <label>Caption (optional)</label>
-            <input type="text" name="<?= e($prefix) ?>[caption]" value="<?= e($img['caption'] ?? '') ?>">
+            <input type="text" name="<?= e($prefix) ?>[caption]" value="<?= e($img['caption'] ?? '') ?>" maxlength="50" data-count="1">
           </div>
           <div class="field">
-            <label>Upload a new photo (JPG, PNG, or WebP). Best size: 150x200 px, 300 dpi.</label>
+            <label>Upload a new photo (JPG, PNG, or WebP). Best size: 150x220 px, 300 dpi.</label>
             <input type="file" class="photo-upload" accept="image/jpeg,image/png,image/webp">
             <span class="photo-upload-status"></span>
           </div>
@@ -83,19 +93,23 @@ function image_field(string $prefix, array $img, string $defaultTreatment): void
     <?php
 }
 
-/** One lead-in + rich text item row (Committee Highlights, All Hands). */
-function lead_item(string $prefix, array $item, string $leadLabel): void {
+/** One lead-in + rich text item row (Committee Highlights, All Hands).
+ *  $opts: 'text_max' caps the text field; 'group' pools lead + text into a
+ *  combined cap (used by All Hands, whose item count varies). */
+function lead_item(string $prefix, array $item, string $leadLabel, array $opts = []): void {
+    $group = isset($opts['group']) ? ' data-group="' . e($opts['group']) . '"' : '';
     ?>
     <div class="lead-item">
       <?php icon_field("{$prefix}[icon]", $item['icon'] ?? 'anchor'); ?>
       <div class="lead-item-fields">
         <div class="field">
           <label><?= e($leadLabel) ?> <span class="hint">(bolded automatically)</span></label>
-          <input type="text" name="<?= e($prefix) ?>[lead]" value="<?= e($item['lead'] ?? '') ?>">
+          <input type="text" name="<?= e($prefix) ?>[lead]" value="<?= e($item['lead'] ?? '') ?>"<?= $group ?>>
         </div>
         <div class="field">
           <label>Text</label>
-          <?php rich_field("{$prefix}[text]", $item['text'] ?? ''); ?>
+          <?php rich_field("{$prefix}[text]", $item['text'] ?? '', false,
+              array_filter(['max' => $opts['text_max'] ?? null, 'group' => $opts['group'] ?? null])); ?>
         </div>
       </div>
     </div>
@@ -132,8 +146,9 @@ $houseAd = $settings['house_ad'] ?? [];
       <h2 class="ed-title">Masthead</h2>
       <div class="field-row">
         <div class="field">
-          <label>Issue date (e.g. JULY 2026)</label>
-          <input type="text" name="issue[date_label]" value="<?= e($issue['issue']['date_label'] ?? '') ?>">
+          <label>Issue date (e.g. JULY 2026) <span class="hint">(shown in caps either way)</span></label>
+          <input type="text" name="issue[date_label]" id="date-label" value="<?= e($issue['issue']['date_label'] ?? '') ?>">
+          <span class="field-warn" id="month-warn" hidden></span>
         </div>
         <div class="field field-narrow">
           <label>Issue number</label>
@@ -150,13 +165,14 @@ $houseAd = $settings['house_ad'] ?? [];
         <?php icon_field('spotlight[icon]', $sp['icon'] ?? 'anchor', 'Section icon'); ?>
       </div>
       <div class="field">
-        <label>Headline</label>
-        <input type="text" name="spotlight[headline]" value="<?= e($sp['headline'] ?? '') ?>">
+        <label>Headline <span class="hint">(one printed line: 10–30 characters)</span></label>
+        <input type="text" name="spotlight[headline]" value="<?= e($sp['headline'] ?? '') ?>" maxlength="30" data-count="1" data-min="10">
       </div>
       <?php image_field('spotlight[image]', $sp['image'] ?? [], 'portrait-float'); ?>
       <div class="field">
         <label>Story <span class="hint">(Enter starts a new paragraph)</span></label>
-        <?php rich_field('spotlight[body]', $sp['body'] ?? '', true); ?>
+        <?php rich_field('spotlight[body]', $sp['body'] ?? '', true,
+            ['limits' => ['none' => 1200, 'portrait-float' => 850, 'landscape-banner' => 650]]); ?>
       </div>
     </section>
 
@@ -167,7 +183,7 @@ $houseAd = $settings['house_ad'] ?? [];
       </div>
       <p class="ed-note">Always exactly two items.</p>
       <?php foreach (array_slice($issue['committee_highlights']['items'], 0, 2) as $i => $item):
-          lead_item("committee_highlights[items][$i]", $item, 'Committee name');
+          lead_item("committee_highlights[items][$i]", $item, 'Committee name', ['text_max' => 215]);
       endforeach; ?>
     </section>
 
@@ -193,7 +209,7 @@ $houseAd = $settings['house_ad'] ?? [];
         <div class="cal-item-fields">
           <div class="field">
             <label>Event title</label>
-            <input type="text" name="calendar[events][<?= $i ?>][title]" value="<?= e($ev['title'] ?? '') ?>">
+            <input type="text" name="calendar[events][<?= $i ?>][title]" value="<?= e($ev['title'] ?? '') ?>" maxlength="30" data-count="1">
           </div>
           <div class="field-row">
             <div class="field">
@@ -202,17 +218,17 @@ $houseAd = $settings['house_ad'] ?? [];
             </div>
             <div class="field">
               <label>Place</label>
-              <input type="text" name="calendar[events][<?= $i ?>][where]" value="<?= e($ww[1] ?? '') ?>">
+              <input type="text" name="calendar[events][<?= $i ?>][where]" value="<?= e($ww[1] ?? '') ?>" maxlength="25" data-count="1">
             </div>
           </div>
           <div class="field-row">
             <div class="field">
               <label>Note</label>
-              <input type="text" name="calendar[events][<?= $i ?>][note]" value="<?= e($ev['note'] ?? '') ?>">
+              <input type="text" name="calendar[events][<?= $i ?>][note]" value="<?= e($ev['note'] ?? '') ?>" maxlength="30" data-count="1">
             </div>
             <div class="field">
               <label>Call to action</label>
-              <input type="text" name="calendar[events][<?= $i ?>][muted_note]" value="<?= e($ev['muted_note'] ?? '') ?>">
+              <input type="text" name="calendar[events][<?= $i ?>][muted_note]" value="<?= e($ev['muted_note'] ?? '') ?>" maxlength="30" data-count="1">
             </div>
           </div>
         </div>
@@ -227,11 +243,12 @@ $houseAd = $settings['house_ad'] ?? [];
       </div>
       <div class="field">
         <label>Lead-in <span class="hint">(bolded automatically)</span></label>
-        <input type="text" name="friendly_reminder[lead]" value="<?= e($issue['friendly_reminder']['lead'] ?? '') ?>">
+        <input type="text" name="friendly_reminder[lead]" value="<?= e($issue['friendly_reminder']['lead'] ?? '') ?>" data-group="fr">
       </div>
       <div class="field">
         <label>Text</label>
-        <?php rich_field('friendly_reminder[text]', $issue['friendly_reminder']['text'] ?? ''); ?>
+        <?php rich_field('friendly_reminder[text]', $issue['friendly_reminder']['text'] ?? '', false, ['group' => 'fr']); ?>
+        <div class="char-count" data-group-counter="fr" data-group-max="270" data-group-label="lead-in + text"></div>
       </div>
     </section>
 
@@ -250,32 +267,33 @@ $houseAd = $settings['house_ad'] ?? [];
         <?php icon_field('flex[qa][icon]', $flex['qa']['icon'] ?? 'envelope', 'Section icon'); ?>
         <div class="field">
           <label>Question</label>
-          <textarea name="flex[qa][question]" rows="2"><?= e($flex['qa']['question'] ?? '') ?></textarea>
+          <textarea name="flex[qa][question]" rows="3" maxlength="300" data-count="1"><?= e($flex['qa']['question'] ?? '') ?></textarea>
         </div>
         <div class="field">
-          <label>Asked by <span class="hint">(e.g. — Marian Holt, Finger D)</span></label>
-          <input type="text" name="flex[qa][question_by]" value="<?= e($flex['qa']['question_by'] ?? '') ?>">
+          <label>Asked by <span class="hint">(e.g. Tom Gentry, Slip 570 — the dash is added for you)</span></label>
+          <input type="text" name="flex[qa][question_by]" value="<?= e($flex['qa']['question_by'] ?? '') ?>" maxlength="30" data-count="1">
         </div>
         <div class="field">
           <label>Answer</label>
-          <textarea name="flex[qa][answer]" rows="6"><?= e($flex['qa']['answer'] ?? '') ?></textarea>
+          <textarea name="flex[qa][answer]" rows="6" maxlength="580" data-count="1"><?= e($flex['qa']['answer'] ?? '') ?></textarea>
         </div>
         <div class="field">
           <label>Answered by</label>
-          <input type="text" name="flex[qa][answer_by]" value="<?= e($flex['qa']['answer_by'] ?? '') ?>">
+          <input type="text" name="flex[qa][answer_by]" value="<?= e($flex['qa']['answer_by'] ?? '') ?>" maxlength="30" data-count="1">
         </div>
       </div>
 
       <div class="mode-panel" data-mode="editorial">
         <?php icon_field('flex[editorial][icon]', $flex['editorial']['icon'] ?? 'house-on-water', 'Section icon'); ?>
         <div class="field">
-          <label>Headline</label>
-          <input type="text" name="flex[editorial][headline]" value="<?= e($flex['editorial']['headline'] ?? '') ?>">
+          <label>Headline <span class="hint">(one printed line: 10–30 characters)</span></label>
+          <input type="text" name="flex[editorial][headline]" value="<?= e($flex['editorial']['headline'] ?? '') ?>" maxlength="30" data-count="1" data-min="10">
         </div>
         <?php image_field('flex[editorial][image]', $flex['editorial']['image'] ?? [], 'landscape-banner'); ?>
         <div class="field">
           <label>Body <span class="hint">(Enter starts a new paragraph)</span></label>
-          <?php rich_field('flex[editorial][body]', $flex['editorial']['body'] ?? '', true); ?>
+          <?php rich_field('flex[editorial][body]', $flex['editorial']['body'] ?? '', true,
+              ['limits' => ['none' => 1000, 'portrait-float' => 850, 'landscape-banner' => 650]]); ?>
         </div>
       </div>
     </section>
@@ -287,18 +305,19 @@ $houseAd = $settings['house_ad'] ?? [];
       </div>
       <div class="field">
         <label>Intro line</label>
-        <?php rich_field('all_hands[intro]', $issue['all_hands']['intro'] ?? ''); ?>
+        <?php rich_field('all_hands[intro]', $issue['all_hands']['intro'] ?? '', false, ['group' => 'ah']); ?>
       </div>
-      <p class="ed-note">Between 1 and 3 items.</p>
+      <p class="ed-note">Between 1 and 3 items. The count below combines the intro and every item.</p>
       <div id="all-hands-items">
         <?php foreach (array_slice($issue['all_hands']['items'], 0, 3) as $i => $item): ?>
         <div class="ah-item">
-          <?php lead_item("all_hands[items][$i]", $item, 'Lead-in'); ?>
+          <?php lead_item("all_hands[items][$i]", $item, 'Lead-in', ['group' => 'ah']); ?>
           <button type="button" class="btn btn-small ah-remove">Remove</button>
         </div>
         <?php endforeach; ?>
       </div>
       <button type="button" class="btn btn-small" id="ah-add">Add an item</button>
+      <div class="char-count" data-group-counter="ah" data-group-max="650" data-group-label="intro + all items"></div>
     </section>
 
     <section class="ed-section">
@@ -309,7 +328,7 @@ $houseAd = $settings['house_ad'] ?? [];
       <?php icon_field('shout_outs[item_icon]', $issue['shout_outs']['item_icon'] ?? 'anchor', 'Item icon'); ?>
       <div class="field">
         <label>Text <span class="hint">(bold the names)</span></label>
-        <?php rich_field('shout_outs[text]', $issue['shout_outs']['text'] ?? ''); ?>
+        <?php rich_field('shout_outs[text]', $issue['shout_outs']['text'] ?? '', false, ['max' => 230]); ?>
       </div>
     </section>
 
@@ -327,7 +346,7 @@ $houseAd = $settings['house_ad'] ?? [];
       </div>
       <div class="field">
         <label>Tip</label>
-        <?php rich_field('dock_talk[text]', $issue['dock_talk']['text'] ?? ''); ?>
+        <?php rich_field('dock_talk[text]', $issue['dock_talk']['text'] ?? '', false, ['max' => 200]); ?>
       </div>
     </section>
 
@@ -397,8 +416,10 @@ $houseAd = $settings['house_ad'] ?? [];
     <?php endforeach; ?>
   </div>
 
-  <!-- Hidden print view used for the overflow check -->
-  <iframe id="fit-frame" src="?issue=<?= e($issueId) ?>&amp;measure=1" hidden></iframe>
+  <!-- Offscreen print view used for the overflow check. Positioned offscreen
+       rather than hidden: display:none would skip layout entirely and every
+       measurement would come back 0 ("always fits"). -->
+  <iframe id="fit-frame" src="?issue=<?= e($issueId) ?>&amp;measure=1" tabindex="-1" aria-hidden="true"></iframe>
 </main>
 <script src="js/editor.js"></script>
 </body>

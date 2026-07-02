@@ -91,6 +91,19 @@ function tda_icon(?string $id, int $size = 17, string $class = ''): string {
     return preg_replace('/<svg\b/', "<svg $attrs", $cache[$id], 1);
 }
 
+/**
+ * Masthead hero: an editor-uploaded replacement in uploads/ wins over the
+ * repo asset. Lives in uploads/ so a deploy can never clobber it (section 7).
+ * Cache-busted by mtime since the filename never changes.
+ */
+function hero_src(): string {
+    foreach (['png', 'jpg', 'webp'] as $ext) {
+        $f = TDA_ROOT . "/uploads/masthead-hero.$ext";
+        if (is_file($f)) return "uploads/masthead-hero.$ext?v=" . filemtime($f);
+    }
+    return 'assets/currents-hero.png';
+}
+
 /** Section header: uppercase label + rule + icon. Used by every section. */
 function section_header(string $label, ?string $iconId, string $marginClass = ''): string {
     return '<div class="sec-head ' . e($marginClass) . '">'

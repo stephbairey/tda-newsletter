@@ -18,6 +18,11 @@ function plain(?string $s): string {
     return trim(preg_replace('/[ \t]+/', ' ', $s));
 }
 
+/** Attribution field: plain text with any leading dash/em-dash removed. */
+function attrib(?string $s): string {
+    return preg_replace('/^[\x{2014}\x{2013}\x{2212}-]+\s*/u', '', plain($s));
+}
+
 /** Rich single-paragraph field: inline marks only, no newlines. */
 function rich_line(?string $s): string {
     return trim(rich(str_replace(["\r", "\n"], ' ', $s ?? '')));
@@ -78,7 +83,9 @@ function sanitize_issue(array $in): array {
 
     return [
         'issue' => [
-            'date_label' => plain($in['issue']['date_label'] ?? ''),
+            // Always displayed in caps regardless of how the editor typed it.
+            // (strtoupper, not mb_: month names are ASCII and mbstring may be absent.)
+            'date_label' => strtoupper(plain($in['issue']['date_label'] ?? '')),
             'number'     => max(1, (int)($in['issue']['number'] ?? 1)),
         ],
         'spotlight' => [
@@ -117,9 +124,11 @@ function sanitize_issue(array $in): array {
             'qa' => [
                 'icon'        => icon_id($in['flex']['qa']['icon'] ?? ''),
                 'question'    => plain($in['flex']['qa']['question'] ?? ''),
-                'question_by' => plain($in['flex']['qa']['question_by'] ?? ''),
+                // The template prepends the em-dash on attributions; strip any
+                // typed one so it never doubles up.
+                'question_by' => attrib($in['flex']['qa']['question_by'] ?? ''),
                 'answer'      => plain($in['flex']['qa']['answer'] ?? ''),
-                'answer_by'   => plain($in['flex']['qa']['answer_by'] ?? ''),
+                'answer_by'   => attrib($in['flex']['qa']['answer_by'] ?? ''),
             ],
             'editorial' => [
                 'icon'     => icon_id($in['flex']['editorial']['icon'] ?? ''),
@@ -237,6 +246,65 @@ function duplicate_issue(string $fromId): ?string {
         $issue['flex']['editorial']['image'] = $copyImage($issue['flex']['editorial']['image']);
     }
     return save_issue($newId, $issue) ? $newId : null;
+}
+
+/** Every uploaded-image filename an issue's JSON references. */
+function issue_image_refs(array $issue): array {
+    $refs = [];
+    foreach ([$issue['spotlight']['image'] ?? [], $issue['flex']['editorial']['image'] ?? []] as $img) {
+        if (!empty($img['src'])) $refs[] = $img['src'];
+    }
+    return $refs;
+}
+
+/**
+ * Delete an issue: its JSON, plus any of its images that no other issue still
+ * references (duplicates make real copies, but the very first issue's photos
+ * predate the prefixing convention, so check by reference, not by name).
+ */
+function delete_issue(string $id): bool {
+    $issue = load_issue($id);
+    if (!$issue) return false;
+
+    $keep = [];
+    foreach (list_issues() as $other) {
+        if ($other === $id) continue;
+        $keep = array_merge($keep, issue_image_refs(load_issue($other) ?? []));
+    }
+    foreach (array_diff(issue_image_refs($issue), $keep) as $img) {
+        $f = TDA_ROOT . '/uploads/' . basename($img);
+        if (is_file($f)) @unlink($f);
+    }
+    return unlink(TDA_DATA . "/$id.json");
+}
+
+/**
+ * Replace the masthead hero image. Only the latest upload is kept: the file is
+ * always named masthead-hero.<ext> in uploads/ and older variants are removed.
+ * Returns null on success or an error message.
+ */
+function handle_hero_upload(array $file): ?string {
+    if (($file['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) return null; // nothing sent
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+        return 'Upload failed — try a smaller file (the server limit may be 2 MB).';
+    }
+    $info = @getimagesize($file['tmp_name']);
+    $types = [IMAGETYPE_JPEG => 'jpg', IMAGETYPE_PNG => 'png', IMAGETYPE_WEBP => 'webp'];
+    if (!$info || !isset($types[$info[2]])) {
+        return 'Please upload a JPG, PNG, or WebP image.';
+    }
+    if ($info[0] < 1500) {
+        return "That image is only {$info[0]}px wide — the masthead needs at least 1500px (2250px prints best).";
+    }
+    $dest = TDA_ROOT . '/uploads/masthead-hero.' . $types[$info[2]];
+    if (!move_uploaded_file($file['tmp_name'], $dest)) {
+        return 'Could not write the file to uploads/.';
+    }
+    foreach (['png', 'jpg', 'webp'] as $ext) {
+        $old = TDA_ROOT . "/uploads/masthead-hero.$ext";
+        if ($old !== $dest && is_file($old)) @unlink($old);
+    }
+    return null;
 }
 
 /**

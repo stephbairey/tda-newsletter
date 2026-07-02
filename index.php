@@ -50,9 +50,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    if ($action === 'delete') {
+        $id = $_GET['issue'] ?? '';
+        $ok = preg_match('/^\d{4}-\d{2}$/', $id) && delete_issue($id);
+        header('Location: ?page=dashboard' . ($ok ? '&deleted=' . urlencode($id) : '&error=delete'));
+        exit;
+    }
+
     if ($action === 'save_settings') {
         save_settings(sanitize_settings($_POST));
-        header('Location: ?page=settings&saved=1');
+        $heroError = handle_hero_upload($_FILES['hero'] ?? []);
+        header('Location: ?page=settings&saved=1'
+            . ($heroError !== null ? '&hero_error=' . urlencode($heroError) : ''));
         exit;
     }
 

@@ -11,6 +11,10 @@ $latest = $issues[0] ?? null;
   <div class="notice notice-error">Could not duplicate — the next month's issue may already exist.</div>
   <?php elseif (($_GET['error'] ?? '') === 'save'): ?>
   <div class="notice notice-error">Could not save the issue. Check that data/ is writable.</div>
+  <?php elseif (($_GET['error'] ?? '') === 'delete'): ?>
+  <div class="notice notice-error">Could not delete that issue.</div>
+  <?php elseif (preg_match('/^\d{4}-\d{2}$/', $_GET['deleted'] ?? '')): ?>
+  <div class="notice notice-ok">Deleted <?= e(date_label_for($_GET['deleted'])) ?> and its photos.</div>
   <?php endif; ?>
 
   <?php if ($latest): ?>
@@ -33,6 +37,10 @@ $latest = $issues[0] ?? null;
         <td class="issue-actions">
           <a class="btn" href="?page=edit&amp;issue=<?= e($id) ?>">Edit</a>
           <a class="btn" href="?issue=<?= e($id) ?>" target="_blank">View / print</a>
+          <form method="post" action="?action=delete&amp;issue=<?= e($id) ?>" style="display:inline"
+                onsubmit="return confirm('Delete <?= e($iss['issue']['date_label'] ?? $id) ?> for good? Its text and photos cannot be recovered.');">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
         </td>
       </tr>
     <?php endforeach; ?>

@@ -25,7 +25,7 @@ $img = $sp['image'] ?? [];
   <?= wave_rule('p1') ?>
 
   <div class="hero">
-    <img class="hero-img" src="assets/currents-hero.png" alt="Tomahawk Island moorage with Mt. Hood">
+    <img class="hero-img" src="<?= e(hero_src()) ?>" alt="Tomahawk Island moorage with Mt. Hood">
   </div>
 
   <div class="p1-body">
@@ -54,7 +54,7 @@ $img = $sp['image'] ?? [];
         <?php if ($i > 0): ?><div class="item-divider"></div><?php endif; ?>
         <div class="icon-item">
           <?= tda_icon($item['icon'] ?? null, 16, 'item-icon') ?>
-          <p><strong><?= e($item['lead'] ?? '') ?></strong> <?= rich($item['text'] ?? '') ?></p>
+          <p><strong><?= e($item['lead'] ?? '') ?></strong><?= ($item['lead'] ?? '') !== '' && ($item['text'] ?? '') !== '' ? ' · ' : ' ' ?><?= rich($item['text'] ?? '') ?></p>
         </div>
         <?php endforeach; ?>
       </div>

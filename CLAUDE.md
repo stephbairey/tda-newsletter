@@ -281,7 +281,9 @@ bounded, and copyfitting still works. Uploaded originals land in `uploads/`.
   - `currents-hero.png` — the Mt. Hood masthead banner, already preprocessed and sized for
     print, with the oval Tomahawk Island logo baked into the image (no separate overlay;
     the handoff's `tda-vector-logo.png` was removed). Treated as a fixed banner, not
-    per-issue content.
+    per-issue content. Settings can upload a replacement, stored as
+    `uploads/masthead-hero.*` (deploy-proof; only the latest upload is kept), which wins
+    over this asset on every issue.
 - `/icons/svg` (static, deploys): the editor-selectable SVG icon set (section 16).
 - `/uploads` (CMS content, excluded from deploy):
   - `josh-talia.jpg` — the issue-one Spotlight photo. Spotlight photos are per-issue, so they
@@ -324,8 +326,24 @@ infuriating mid-edit. Make the warning loud and obvious for the backup editor's 
 **Count rendered text, not markup.** The overflow measure and any character limit count the
 visible text length, not the HTML string, or the tags inflate the count into nonsense.
 
-**Character limits are discovered, not guessed.** Start without hard caps. As real copy meets
-real boxes during the build, set per-field limits where they earn their place.
+**Character limits are discovered, not guessed.** They were discovered in the July 2026
+stress test and are now enforced in the editor (maxlength on plain fields, typing blocked at
+the cap on rich fields, live counters under every limited field). Counts are of rendered
+text, per above. The caps (defined in `templates/editor.php`):
+
+- Headlines (Spotlight, Editorial): 10–30 chars; the printed headline is **one line, no
+  wrap** (`white-space: nowrap`), which is what forces brevity.
+- Spotlight body: 1200 no photo / 850 portrait / 650 landscape (the cap follows the photo
+  toggle and treatment). Editorial body: 1000 / 850 / 650. Captions: 50.
+- Committee Highlights item text: 215 each. Calendar: title/note/call-to-action 30, place 25.
+- Friendly Reminder: lead-in + text **combined** 270.
+- Q&A: question 300, answer 580, attributions 30 (the em-dash is added by the template).
+- All Hands: intro + all items **combined** 650 (combined because the item count varies;
+  calibrated by measurement against the July-issue baseline).
+- Shout-Outs: 230. Dock Talk tip: 200.
+
+The caps were each calibrated against otherwise-normal issue content; maxing every page-2
+field at once still overflows, and the overflow warning is the backstop for that case.
 
 ## 13. Duplicate an issue
 

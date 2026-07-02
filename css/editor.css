@@ -287,6 +287,9 @@ legend {
   cursor: pointer;
 }
 .icon-choice:hover { background: var(--tint); border-color: var(--blue); }
+/* display:grid above beats the hidden attribute's UA display:none — restore it,
+ * or the palette sits visible at the bottom of the page and never closes. */
+#icon-palette[hidden] { display: none; }
 
 /* ===== Items (Committee Highlights / All Hands) ===== */
 .lead-item {
@@ -344,7 +347,7 @@ legend {
 }
 .photo-frame:active { cursor: grabbing; }
 /* Editor preview frames mirror the print treatments at print scale. */
-.photo-frame.treatment-portrait-float { width: 153px; height: 204px; }
+.photo-frame.treatment-portrait-float { width: 153px; height: 220px; }
 .photo-frame.treatment-landscape-banner { width: 340px; height: 150px; }
 .photo-frame img {
   width: 100%;
@@ -373,7 +376,34 @@ legend {
 .photo-upload-status { font-size: 12px; color: var(--muted); }
 .photo-upload-status.err { color: #b03030; font-weight: 600; }
 
+/* ===== Character counters ===== */
+.char-count {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-top: 3px;
+  text-align: right;
+}
+.char-count.over { color: #b03030; font-weight: 700; }
+.char-count.under-min { color: var(--warn-border); font-weight: 700; }
+
+/* Inline field warning (e.g. month misspelling) */
+.field-warn {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #9a6a12;
+  background: var(--warn-bg);
+  border-left: 3px solid var(--warn-border);
+  padding: 5px 9px;
+  margin-top: 5px;
+}
+.field-warn[hidden] { display: none; }
+
 /* ===== Settings ===== */
 .settings-form { max-width: 620px; }
+.hero-preview { max-width: 340px; border: 1px solid var(--rule); display: block; margin-bottom: 10px; }
 
-#fit-frame { position: absolute; width: 900px; height: 10px; left: -9999px; top: 0; border: 0; }
+.btn-danger { color: #b03030; border-color: #d9b0b0; }
+.btn-danger:hover { background: var(--err-bg); }
+
+#fit-frame { position: absolute; width: 900px; height: 1200px; left: -9999px; top: 0; border: 0; }

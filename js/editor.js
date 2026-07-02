@@ -60,12 +60,15 @@
     document.execCommand(btn.dataset.cmd === 'clear' ? 'removeFormat' : btn.dataset.cmd, false, null);
   });
 
-  document.querySelectorAll('.rich-area').forEach(function (area) {
+  function bindRichArea(area) {
     // Paste as plain text: the single most important safeguard (section 12).
+    // Trimmed to the room left under the field's character limit, if any.
     area.addEventListener('paste', function (ev) {
       ev.preventDefault();
       var text = (ev.clipboardData || window.clipboardData).getData('text/plain');
-      document.execCommand('insertText', false, text);
+      var room = insertRoom(area.closest('.rich'));
+      if (room !== null && text.length > room) text = text.slice(0, Math.max(0, room));
+      if (text) document.execCommand('insertText', false, text);
     });
     // Single-line fields have no paragraphs.
     if (area.dataset.multi !== '1') {
@@ -73,7 +76,8 @@
         if (ev.key === 'Enter') ev.preventDefault();
       });
     }
-  });
+  }
+  document.querySelectorAll('.rich-area').forEach(bindRichArea);
 
   if (form) {
     form.addEventListener('submit', function () {
@@ -240,17 +244,10 @@
       if (iconBtn && anchor) { iconBtn.innerHTML = anchor.innerHTML; iconBtn.dataset.icon = 'anchor'; }
       clone.querySelector('.icon-field input[type="hidden"]').value = 'anchor';
       // The cloned single-line rich area needs its Enter/paste handlers back.
-      clone.querySelectorAll('.rich-area').forEach(function (area) {
-        area.addEventListener('paste', function (ev) {
-          ev.preventDefault();
-          document.execCommand('insertText', false, (ev.clipboardData || window.clipboardData).getData('text/plain'));
-        });
-        area.addEventListener('keydown', function (ev) {
-          if (ev.key === 'Enter') ev.preventDefault();
-        });
-      });
+      clone.querySelectorAll('.rich-area').forEach(bindRichArea);
       ahWrap.appendChild(clone);
       ahReindex();
+      renderCounters();
     });
 
     ahWrap.addEventListener('click', function (ev) {
@@ -258,9 +255,148 @@
       if (!btn || ahItems().length <= 1) return;
       btn.closest('.ah-item').remove();
       ahReindex();
+      renderCounters();
     });
 
     ahReindex();
+  }
+
+  /* ================= Character limits & live counters =================
+   * Counts VISIBLE text (never markup, section 12). Plain inputs also carry
+   * maxlength; rich areas and combined groups are enforced here by blocking
+   * further typing at the cap. Paste is trimmed to fit in bindRichArea. */
+
+  // Visible character count of a .rich widget or a plain input/textarea.
+  function richLen(rich) {
+    return rich.querySelector('.rich-area').textContent.replace(/\u00a0/g, ' ').trim().length;
+  }
+  function fieldLen(el) {
+    return el.classList.contains('rich') ? richLen(el) : el.value.length;
+  }
+
+  // A rich field's own cap. data-limits caps depend on the section's photo:
+  // key 'none' when the photo is off, else the chosen treatment's key.
+  function resolveMax(rich) {
+    if (rich.dataset.max) return +rich.dataset.max;
+    if (!rich.dataset.limits) return null;
+    var limits = JSON.parse(rich.dataset.limits);
+    var scope = rich.closest('.mode-panel') || rich.closest('.ed-section');
+    var w = scope && scope.querySelector('.photo-widget');
+    var photoOn = w && w.querySelector('.photo-toggle input').checked &&
+                  w.querySelector('.photo-frame').dataset.empty !== '1';
+    return photoOn ? (limits[w.querySelector('.photo-treatment').value] || limits.none) : limits.none;
+  }
+
+  var groupMaxes = {};
+  document.querySelectorAll('[data-group-counter]').forEach(function (out) {
+    groupMaxes[out.dataset.groupCounter] = +out.dataset.groupMax;
+  });
+  function groupLen(g) {
+    var sum = 0;
+    document.querySelectorAll('[data-group="' + g + '"]').forEach(function (el) {
+      sum += fieldLen(el);
+    });
+    return sum;
+  }
+
+  // How many characters can still be inserted into a rich field (null = no cap).
+  function insertRoom(rich) {
+    if (!rich) return null;
+    var room = null;
+    var max = resolveMax(rich);
+    if (max) room = max - richLen(rich);
+    var g = rich.dataset.group;
+    if (g && groupMaxes[g]) {
+      var gr = groupMaxes[g] - groupLen(g);
+      room = room === null ? gr : Math.min(room, gr);
+    }
+    return room;
+  }
+
+  // Block typing past a cap (deletes and formatting always allowed).
+  document.addEventListener('beforeinput', function (ev) {
+    if (!ev.inputType || ev.inputType.indexOf('insert') !== 0) return;
+    var t = ev.target;
+    if (t.classList && t.classList.contains('rich-area')) {
+      var room = insertRoom(t.closest('.rich'));
+      if (room !== null && room <= 0) ev.preventDefault();
+    } else if (t.dataset && t.dataset.group && groupMaxes[t.dataset.group]) {
+      if (groupLen(t.dataset.group) >= groupMaxes[t.dataset.group]) ev.preventDefault();
+    }
+  });
+
+  // Build the counter elements.
+  var counters = [];
+  document.querySelectorAll('[data-count]').forEach(function (el) {
+    var out = document.createElement('div');
+    out.className = 'char-count';
+    el.insertAdjacentElement('afterend', out);
+    counters.push({ el: el, out: out, max: +el.getAttribute('maxlength') || null, min: +el.dataset.min || 0 });
+  });
+  document.querySelectorAll('.rich[data-max], .rich[data-limits]').forEach(function (rich) {
+    var out = document.createElement('div');
+    out.className = 'char-count';
+    rich.insertAdjacentElement('afterend', out);
+    counters.push({ el: rich, out: out, rich: true });
+  });
+  document.querySelectorAll('[data-group-counter]').forEach(function (out) {
+    counters.push({ group: out.dataset.groupCounter, out: out,
+                    max: +out.dataset.groupMax, label: out.dataset.groupLabel });
+  });
+
+  function renderCounters() {
+    counters.forEach(function (c) {
+      var cur, max;
+      if (c.group) { cur = groupLen(c.group); max = c.max; }
+      else if (c.rich) { cur = richLen(c.el); max = resolveMax(c.el); }
+      else { cur = c.el.value.length; max = c.max; }
+      var txt = max ? cur + ' / ' + max : String(cur);
+      if (c.label) txt += ' (' + c.label + ')';
+      var underMin = c.min && cur > 0 && cur < c.min;
+      if (underMin) txt += ' — minimum ' + c.min;
+      c.out.textContent = txt;
+      c.out.classList.toggle('over', !!max && cur > max);
+      c.out.classList.toggle('under-min', !!underMin);
+    });
+  }
+  document.addEventListener('input', renderCounters);
+  document.addEventListener('change', renderCounters); // photo toggle / treatment swaps the cap
+  renderCounters();
+
+  /* ================= Month misspelling check (masthead date) ================= */
+
+  var dateInput = document.getElementById('date-label');
+  var monthWarn = document.getElementById('month-warn');
+  if (dateInput && monthWarn) {
+    var MONTHS = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY',
+                  'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+    var editDist = function (a, b) {
+      var row = [];
+      for (var j = 0; j <= b.length; j++) row[j] = j;
+      for (var i = 1; i <= a.length; i++) {
+        var prev = row[0]; row[0] = i;
+        for (var k = 1; k <= b.length; k++) {
+          var cur = row[k];
+          row[k] = Math.min(cur + 1, row[k - 1] + 1, prev + (a[i - 1] === b[k - 1] ? 0 : 1));
+          prev = cur;
+        }
+      }
+      return row[b.length];
+    };
+    var checkMonth = function () {
+      var word = dateInput.value.trim().toUpperCase().split(/\s+/)[0] || '';
+      if (word === '' || MONTHS.indexOf(word) !== -1) { monthWarn.hidden = true; return; }
+      var best = null, bestD = 4;
+      MONTHS.forEach(function (m) {
+        var d = editDist(word, m);
+        if (d < bestD) { bestD = d; best = m; }
+      });
+      monthWarn.textContent = '"' + word + '" doesn’t look like a month' +
+        (best ? ' — did you mean ' + best + '?' : '.');
+      monthWarn.hidden = false;
+    };
+    dateInput.addEventListener('input', checkMonth);
+    checkMonth();
   }
 
   /* ================= Overflow check (soft warning, section 12) ================= */

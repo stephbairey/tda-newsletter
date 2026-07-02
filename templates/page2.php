@@ -37,14 +37,18 @@ $dateLine = ucwords(strtolower($issue['issue']['date_label'] ?? ''));
           <span class="qa-initial qa-q">Q</span>
           <div>
             <p class="qa-text"><?= e($qa['question'] ?? '') ?></p>
-            <p class="qa-attrib"><?= e($qa['question_by'] ?? '') ?></p>
+            <?php if (attrib($qa['question_by'] ?? '') !== ''): ?>
+            <p class="qa-attrib">&mdash; <?= e(attrib($qa['question_by'])) ?></p>
+            <?php endif; ?>
           </div>
         </div>
         <div class="qa-block">
           <span class="qa-initial qa-a">A</span>
           <div>
             <p class="qa-text"><?= e($qa['answer'] ?? '') ?></p>
-            <p class="qa-attrib"><?= e($qa['answer_by'] ?? '') ?></p>
+            <?php if (attrib($qa['answer_by'] ?? '') !== ''): ?>
+            <p class="qa-attrib">&mdash; <?= e(attrib($qa['answer_by'])) ?></p>
+            <?php endif; ?>
           </div>
         </div>
         <?php else: $ed = $flex['editorial'] ?? []; $edImg = $ed['image'] ?? []; ?>
