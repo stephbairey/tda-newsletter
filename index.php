@@ -1,10 +1,19 @@
 <?php
 /**
  * TDA Currents — app entry.
- * Routes: ?issue=YYYY-MM renders that issue; no param renders the latest.
- * With no issues in data/, shows the placeholder card.
+ *
+ * Views (GET):            Actions (POST):
+ *   /                       ?action=save&issue=YYYY-MM
+ *   ?issue=YYYY-MM          ?action=duplicate&from=YYYY-MM
+ *   ?page=dashboard         ?action=upload&issue=YYYY-MM   (JSON response)
+ *   ?page=edit&issue=…      ?action=save_settings
+ *   ?page=settings
+ *
+ * The whole subdomain sits behind cPanel Directory Privacy (section 8), so
+ * every route above is already password-protected.
  */
 require __DIR__ . '/templates/helpers.php';
+require __DIR__ . '/templates/store.php';
 
 // data/ and uploads/ are runtime folders excluded from deploy (section 7):
 // create them on first run so a fresh server works without manual setup.
@@ -14,8 +23,70 @@ foreach ([TDA_DATA, TDA_ROOT . '/uploads'] as $dir) {
 
 $settings = load_settings();
 $issues   = list_issues();
-$issueId  = $_GET['issue'] ?? ($issues[0] ?? null);
-$issue    = $issueId ? load_issue($issueId) : null;
+
+/* ---------- Actions ---------- */
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $action = $_GET['action'] ?? '';
+
+    if ($action === 'upload') {
+        header('Content-Type: application/json');
+        echo json_encode(handle_upload($_GET['issue'] ?? '', $_FILES['photo'] ?? []));
+        exit;
+    }
+
+    if ($action === 'save') {
+        $id = $_GET['issue'] ?? '';
+        if (preg_match('/^\d{4}-\d{2}$/', $id) && save_issue($id, sanitize_issue($_POST))) {
+            header("Location: ?page=edit&issue=$id&saved=1");
+        } else {
+            header("Location: ?page=dashboard&error=save");
+        }
+        exit;
+    }
+
+    if ($action === 'duplicate') {
+        $newId = duplicate_issue($_GET['from'] ?? '');
+        header('Location: ' . ($newId ? "?page=edit&issue=$newId" : '?page=dashboard&error=duplicate'));
+        exit;
+    }
+
+    if ($action === 'save_settings') {
+        save_settings(sanitize_settings($_POST));
+        header('Location: ?page=settings&saved=1');
+        exit;
+    }
+
+    http_response_code(400);
+    exit('Unknown action');
+}
+
+/* ---------- Views ---------- */
+$page = $_GET['page'] ?? '';
+
+if ($page === 'dashboard') {
+    include __DIR__ . '/templates/dashboard.php';
+    exit;
+}
+
+if ($page === 'settings') {
+    include __DIR__ . '/templates/settings.php';
+    exit;
+}
+
+if ($page === 'edit') {
+    $issueId = $_GET['issue'] ?? '';
+    $issue   = load_issue($issueId);
+    if ($issue) {
+        include __DIR__ . '/templates/editor.php';
+        exit;
+    }
+    header('Location: ?page=dashboard');
+    exit;
+}
+
+// Newsletter view (default): a specific issue, or the latest.
+$issueId = $_GET['issue'] ?? ($issues[0] ?? null);
+$issue   = $issueId ? load_issue($issueId) : null;
 
 if ($issue) {
     include __DIR__ . '/templates/newsletter.php';
@@ -46,6 +117,8 @@ if ($issue) {
   .tagline { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:10px; }
   .soon { display:inline-block; margin-top:28px; padding:12px 26px; background:var(--tint);
           border-top:3px solid var(--ink); font-family:'Playfair Display',serif; font-size:21px; font-weight:800; color:var(--ink); }
+  .go { margin-top:22px; font-size:13px; }
+  .go a { color:var(--blue); font-weight:600; }
 </style>
 </head>
 <body>
@@ -54,6 +127,7 @@ if ($issue) {
     <h1>TDA <em>Currents</em></h1>
     <div class="tagline"><?= e($settings['tagline'] ?? 'Keeping our community connected on the water') ?></div>
     <div class="soon">Coming Soon</div>
+    <div class="go"><a href="?page=dashboard">Open the editor</a></div>
   </div>
 </body>
 </html>

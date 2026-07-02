@@ -61,6 +61,13 @@ function rich_paras(?string $text, string $class = ''): string {
     return $out;
 }
 
+/** All icon ids in the set, sorted. */
+function list_icons(): array {
+    $ids = array_map(fn($f) => basename($f, '.svg'), glob(TDA_ICONS . '/*.svg'));
+    sort($ids);
+    return $ids;
+}
+
 /**
  * Inline an icon from /icons/svg by id, sized via width/height attributes and
  * colored by CSS currentColor. Unknown or missing ids fall back to the anchor

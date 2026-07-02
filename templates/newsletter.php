@@ -48,6 +48,17 @@ function tdaMeasure() {
   var el = document.getElementById('measure-out');
   if (!el) { el = document.createElement('div'); el.id = 'measure-out'; document.body.appendChild(el); }
   el.textContent = 'MEASURE: ' + out.join(' || ');
+  if (window.parent !== window) {
+    // Embedded by the editor for its overflow check.
+    var pages = [];
+    document.querySelectorAll('.sheet').forEach(function (s) {
+      var prev = s.style.height;
+      s.style.height = 'auto';
+      pages.push(Math.round(s.getBoundingClientRect().height));
+      s.style.height = prev;
+    });
+    window.parent.postMessage({ tda: 'fit', pages: pages, limit: 1056 }, '*');
+  }
 }
 window.addEventListener('load', tdaMeasure);
 setTimeout(tdaMeasure, 3000);

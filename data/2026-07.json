@@ -1,121 +1,127 @@
 {
-  "issue": {
-    "date_label": "JULY 2026",
-    "number": 1
-  },
-  "spotlight": {
-    "icon": "two-people",
-    "headline": "New Faces at Slip 510",
-    "image": {
-      "enabled": true,
-      "src": "josh-talia.jpg",
-      "caption": "Josh, Talia, and Zeke",
-      "treatment": "portrait-float",
-      "object_position": "center 28%"
+    "issue": {
+        "date_label": "JULY 2026",
+        "number": 1
     },
-    "body": "The moorage welcomes three new faces at slip 510: <strong>Josh</strong>, his partner <strong>Talia</strong>, and <strong>Zeke</strong>, their easygoing dog. Renting from Thea Hosford and friends of Bill and Trudy Bowling, the couple may be familiar to you already.\n\nTalia, from North Carolina, teaches animal behavior and veterinary science and is a self‑described workaholic, so that’s likely her walking the dog at dawn. Josh, recently retired from landlocked Alberta, is an adventure junkie thrilled to live on the water.\n\nZeke, Josh’s diabetic service dog, tags along everywhere and is as friendly as they come. Say hello if you see them around the docks."
-  },
-  "committee_highlights": {
-    "icon": "community",
-    "items": [
-      {
-        "icon": "maintenance",
-        "lead": "Docks & Maintenance.",
-        "text": "New solar path lights are up along the main walkway—brighter evenings, no wiring. Fresh decking lands on Finger C in August."
-      },
-      {
-        "icon": "wine-glass",
-        "lead": "Social Committee.",
-        "text": "Eighty neighbors turned out for June’s dock potluck. The sunset cruise sign‑up sheet goes live mid‑month at the clubhouse."
-      }
-    ]
-  },
-  "calendar": {
-    "icon": "calendar",
-    "events": [
-      {
-        "month": "AUG",
-        "day": "12",
-        "title": "Board Meeting",
-        "when_where": "6:30 PM · Clubhouse",
-        "note": "Coffee & pastries from 6:15.",
-        "muted_note": "All members welcome."
-      },
-      {
-        "month": "SEP",
-        "day": "27",
-        "title": "Annual Progressive Dinner",
-        "when_where": "5:00 PM · Start at A‑Dock",
-        "note": "Three courses, three docks.",
-        "muted_note": "Bring a dish to share."
-      }
-    ]
-  },
-  "friendly_reminder": {
-    "icon": "dog",
-    "lead": "Leashes, please.",
-    "text": "Our docks are shared—keep pups leashed on common walkways and scoop the loop. Thanks for keeping the boards friendly for every neighbor (and every gull)."
-  },
-  "flex": {
-    "mode": "qa",
-    "qa": {
-      "icon": "envelope",
-      "question": "Is it normal for my home to creak and shift more once the cold weather sets in?",
-      "question_by": "— Marian Holt, Finger D",
-      "answer": "Completely normal, and nothing to worry about. Floats and walkways are built to flex as water temperature, wind, and river levels change through the seasons, so a little creaking and settling is just your home doing its job. You’ll usually hear it most on the first cold snap of the year and again when the spring runoff raises the river. If a gangway or ramp starts to sit noticeably unevenly, sticks when you walk it, or a door suddenly won’t latch, log it with Maintenance and we’ll come re‑trim the floats and check the connections.",
-      "answer_by": "— Dale Whitcomb, Dock Committee"
+    "spotlight": {
+        "icon": "two-people",
+        "headline": "New Faces at Slip 510",
+        "image": {
+            "enabled": true,
+            "src": "josh-talia.jpg",
+            "caption": "Josh, Talia, and Zeke",
+            "treatment": "portrait-float",
+            "object_position": "50% 28%"
+        },
+        "body": "The moorage welcomes three new faces at slip 510: <strong>Josh</strong>, his partner <strong>Talia</strong>, and <strong>Zeke</strong>, their easygoing dog. Renting from Thea Hosford and friends of Bill and Trudy Bowling, the couple may be familiar to you already.\n\nTalia, from North Carolina, teaches animal behavior and veterinary science and is a self‑described workaholic, so that’s likely her walking the dog at dawn. Josh, recently retired from landlocked Alberta, is an adventure junkie thrilled to live on the water.\n\nZeke, Josh’s diabetic service dog, tags along everywhere and is as friendly as they come. Say hello if you see them around the docks."
     },
-    "editorial": {
-      "icon": "house-on-water",
-      "headline": "",
-      "image": { "enabled": false, "src": "", "caption": "", "treatment": "landscape-banner", "object_position": "center center" },
-      "body": ""
+    "committee_highlights": {
+        "icon": "community",
+        "items": [
+            {
+                "icon": "maintenance",
+                "lead": "Docks & Maintenance.",
+                "text": "New solar path lights are up along the main walkway—brighter evenings, no wiring. Fresh decking lands on Finger C in August."
+            },
+            {
+                "icon": "wine-glass",
+                "lead": "Social Committee.",
+                "text": "Eighty neighbors turned out for June’s dock potluck. The sunset cruise sign‑up sheet goes live mid‑month at the clubhouse."
+            }
+        ]
+    },
+    "calendar": {
+        "icon": "calendar",
+        "events": [
+            {
+                "month": "AUG",
+                "day": "12",
+                "title": "Board Meeting",
+                "when_where": "6:30 PM · Clubhouse",
+                "note": "Coffee & pastries from 6:15.",
+                "muted_note": "All members welcome."
+            },
+            {
+                "month": "SEP",
+                "day": "27",
+                "title": "Annual Progressive Dinner",
+                "when_where": "5:00 PM · Start at A‑Dock",
+                "note": "Three courses, three docks.",
+                "muted_note": "Bring a dish to share."
+            }
+        ]
+    },
+    "friendly_reminder": {
+        "icon": "dog",
+        "lead": "Leashes, please.",
+        "text": "Our docks are shared—keep pups leashed on common walkways and scoop the loop. Thanks for keeping the boards friendly for every neighbor (and every gull)."
+    },
+    "flex": {
+        "mode": "qa",
+        "qa": {
+            "icon": "envelope",
+            "question": "Is it normal for my home to creak and shift more once the cold weather sets in?",
+            "question_by": "— Marian Holt, Finger D",
+            "answer": "Completely normal, and nothing to worry about. Floats and walkways are built to flex as water temperature, wind, and river levels change through the seasons, so a little creaking and settling is just your home doing its job. You’ll usually hear it most on the first cold snap of the year and again when the spring runoff raises the river. If a gangway or ramp starts to sit noticeably unevenly, sticks when you walk it, or a door suddenly won’t latch, log it with Maintenance and we’ll come re‑trim the floats and check the connections.",
+            "answer_by": "— Dale Whitcomb, Dock Committee"
+        },
+        "editorial": {
+            "icon": "house-on-water",
+            "headline": "",
+            "image": {
+                "enabled": false,
+                "src": "",
+                "caption": "",
+                "treatment": "landscape-banner",
+                "object_position": "center center"
+            },
+            "body": ""
+        }
+    },
+    "all_hands": {
+        "icon": "waving-hand",
+        "intro": "Two ways to pitch in this issue—a little time keeps the newsletter on every doorstep.",
+        "items": [
+            {
+                "icon": "printer",
+                "lead": "Monthly print run.",
+                "text": "Pick up the printed copies from our shop in Vancouver once a month. In‑person pickup only."
+            },
+            {
+                "icon": "house-on-water",
+                "lead": "Door‑to‑door delivery.",
+                "text": "A small crew to walk the docks and drop a copy at each home. Many hands, quick work."
+            },
+            {
+                "icon": "cell-phone",
+                "lead": "Dock photographer.",
+                "text": "Snap a few candids at gatherings and around the moorage so we’ve got fresh images for future issues."
+            }
+        ]
+    },
+    "shout_outs": {
+        "icon": "flower",
+        "item_icon": "anchor",
+        "text": "A big thank‑you to <strong>Greg Korn</strong> and <strong>Russell Menenberg</strong> for keeping the dock carts wrangled, repaired, and right‑side‑up all season. The whole moorage notices."
+    },
+    "dock_talk": {
+        "icon": "lightning",
+        "eyebrow": "Did you know?",
+        "item_icon": "sea-lion",
+        "text": "A spritz of <strong>Pine‑Sol</strong> around the base of your home helps keep curious river otters from settling in underneath. Reapply after heavy rain."
+    },
+    "sponsor": {
+        "mode": "ad",
+        "icon": "megaphone",
+        "ad": {
+            "sub_mode": "sponsor",
+            "name": "Lingua Ink Media",
+            "tagline": "We build and refresh websites for your custom needs.",
+            "url": "https://linguainkmedia.com"
+        },
+        "trivia": {
+            "headline": "",
+            "text": ""
+        }
     }
-  },
-  "all_hands": {
-    "icon": "waving-hand",
-    "intro": "Two ways to pitch in this issue—a little time keeps the newsletter on every doorstep.",
-    "items": [
-      {
-        "icon": "printer",
-        "lead": "Monthly print run.",
-        "text": "Pick up the printed copies from our shop in Vancouver once a month. In‑person pickup only."
-      },
-      {
-        "icon": "house-on-water",
-        "lead": "Door‑to‑door delivery.",
-        "text": "A small crew to walk the docks and drop a copy at each home. Many hands, quick work."
-      },
-      {
-        "icon": "cell-phone",
-        "lead": "Dock photographer.",
-        "text": "Snap a few candids at gatherings and around the moorage so we’ve got fresh images for future issues."
-      }
-    ]
-  },
-  "shout_outs": {
-    "icon": "flower",
-    "item_icon": "anchor",
-    "text": "A big thank‑you to <strong>Greg Korn</strong> and <strong>Russell Menenberg</strong> for keeping the dock carts wrangled, repaired, and right‑side‑up all season. The whole moorage notices."
-  },
-  "dock_talk": {
-    "icon": "lightning",
-    "eyebrow": "Did you know?",
-    "item_icon": "sea-lion",
-    "text": "A spritz of <strong>Pine‑Sol</strong> around the base of your home helps keep curious river otters from settling in underneath. Reapply after heavy rain."
-  },
-  "sponsor": {
-    "mode": "ad",
-    "icon": "megaphone",
-    "ad": {
-      "sub_mode": "sponsor",
-      "name": "Lingua Ink Media",
-      "tagline": "We build and refresh websites for your custom needs.",
-      "url": "https://linguainkmedia.com"
-    },
-    "trivia": {
-      "headline": "",
-      "text": ""
-    }
-  }
 }
