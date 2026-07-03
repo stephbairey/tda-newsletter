@@ -58,8 +58,8 @@ $img = $sp['image'] ?? [];
     <div class="p1-right">
       <?= section_header('Committee Highlights', $ch['icon'] ?? null) ?>
       <div class="highlights">
-        <?php // Three slots; blank ones are skipped so two-item months print clean.
-          $chItems = array_values(array_filter(array_slice($ch['items'] ?? [], 0, 3),
+        <?php // Four slots; blank ones are skipped so shorter months print clean.
+          $chItems = array_values(array_filter(array_slice($ch['items'] ?? [], 0, 4),
               fn($it) => trim(($it['lead'] ?? '') . strip_tags($it['text'] ?? '')) !== '')); ?>
         <?php foreach ($chItems as $i => $item): ?>
         <?php if ($i > 0): ?><div class="item-divider"></div><?php endif; ?>
@@ -74,7 +74,7 @@ $img = $sp['image'] ?? [];
       </div>
 
       <?= section_header('On the Calendar', $cal['icon'] ?? null, 'sec-head-calendar') ?>
-      <?php $calEvents = array_values(array_filter(array_slice($cal['events'] ?? [], 0, 3),
+      <?php $calEvents = array_values(array_filter(array_slice($cal['events'] ?? [], 0, 4),
           fn($e) => trim(($e['title'] ?? '') . ($e['month'] ?? '') . ($e['day'] ?? '')
               . ($e['when_where'] ?? '') . ($e['note'] ?? '') . ($e['muted_note'] ?? '')) !== '')); ?>
       <?php foreach ($calEvents as $i => $ev): ?>

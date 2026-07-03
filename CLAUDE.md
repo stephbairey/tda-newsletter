@@ -214,8 +214,8 @@ the wavy rule under the running head.)
 - **Masthead:** issue date, issue number. (The hero banner is a fixed asset in `/assets`, not
   a per-issue upload; see Assets below.)
 - **Spotlight:** icon, headline, body, optional photo + caption, image treatment/crop
-- **Committee Highlights:** 3 item slots { icon, bold lead-in, text }; blank slots don't print
-- **Calendar:** 3 event slots { month, day, title, time and place, note }; blank slots don't print
+- **Committee Highlights:** 4 item slots { icon, bold lead-in, text }; blank slots don't print
+- **Calendar:** 4 event slots { month, day, title, time and place, note }; blank slots don't print
 - **Friendly Reminder:** { icon, lead-in, text }
 - **Flex slot:** mode (`qa` or `editorial`) plus the matching fields (see section 10)
 - **All Hands on Deck:** intro line + 1 to 3 items { icon, lead-in, text }
@@ -233,12 +233,12 @@ Three kinds of block. This distinction is the heart of the layout and keeps a fi
 page from getting away from us.
 
 **Fixed-count blocks.** A fixed number of slots, no add/remove UI; a slot left entirely
-blank is skipped at render (raised from 2 to 3 in July 2026).
-- Committee Highlights: 3 slots.
-- Calendar: 3 slots.
+blank is skipped at render (raised from 2 to 4 in July 2026).
+- Committee Highlights: 4 slots.
+- Calendar: 4 slots.
 These feed the tight upper-right quadrant of page one; capping their count is what keeps that
-region predictable. Three full slots in both plus a long Spotlight can overflow — the fit
-warning is the backstop.
+region predictable. Filling every slot plus a long Spotlight will overflow — the fit
+warning is the backstop, and short months just leave slots blank.
 
 **Toggle blocks.** Editor picks a mode per issue.
 - **Flex slot** (page 2): `qa` or `editorial`.

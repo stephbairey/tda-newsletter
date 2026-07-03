@@ -98,7 +98,7 @@ function sanitize_issue(array $in): array {
             'icon'  => icon_id($in['committee_highlights']['icon'] ?? ''),
             // The template renders "name · text"; strip whitespace and any
             // typed middot from the joint so the separator never doubles.
-            'items' => $items($in['committee_highlights']['items'] ?? [], 3, 3, fn(array $i) => [
+            'items' => $items($in['committee_highlights']['items'] ?? [], 4, 4, fn(array $i) => [
                 'icon' => icon_id($i['icon'] ?? ''),
                 'lead' => preg_replace('/[\s\x{00B7}]+$/u', '', plain($i['lead'] ?? '')),
                 'text' => preg_replace('/^[\s\x{00B7}]+/u', '', rich_line($i['text'] ?? '')),
@@ -106,7 +106,7 @@ function sanitize_issue(array $in): array {
         ],
         'calendar' => [
             'icon'   => icon_id($in['calendar']['icon'] ?? ''),
-            'events' => $items($in['calendar']['events'] ?? [], 3, 3, fn(array $e) => [
+            'events' => $items($in['calendar']['events'] ?? [], 4, 4, fn(array $e) => [
                 'month'      => strtoupper(substr(plain($e['month'] ?? ''), 0, 4)),
                 'day'        => substr(plain($e['day'] ?? ''), 0, 2),
                 'title'      => plain($e['title'] ?? ''),
