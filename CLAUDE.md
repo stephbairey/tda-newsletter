@@ -330,7 +330,9 @@ fixed boxes and breaks the locked design, so the editor allows inline marks only
   All Hands item body, Dock Talk body, Shout-Outs body, Friendly Reminder body.
 - **Plain text** (the template styles them; the editor applies no formatting): all headlines
   and section labels, calendar fields, Q/A and other attributions, the Dock Talk eyebrow,
-  issue date and number, sponsor and trivia fields, URLs.
+  issue date and number, sponsor and trivia fields, URLs. The **Q&A answer** is the one
+  plain field that keeps the editor's line breaks (Enter in the textarea prints; stored via
+  `plain_lines()`, rendered with `nl2br`).
 - **Structured lead-ins** (a separate plain field, auto-bolded by the template): the bold
   opener on Committee Highlights, All Hands, and Friendly Reminder items. The editor types the
   phrase in its own box and the template bolds it, so the signature look is always right

@@ -45,7 +45,8 @@ $dateLine = ucwords(strtolower($issue['issue']['date_label'] ?? ''));
         <div class="qa-block">
           <span class="qa-initial qa-a">A</span>
           <div>
-            <p class="qa-text"><?= e($qa['answer'] ?? '') ?></p>
+            <?php // The answer keeps the editor's line breaks (plain_lines + nl2br). ?>
+            <p class="qa-text"><?= nl2br(e($qa['answer'] ?? '')) ?></p>
             <?php if (attrib($qa['answer_by'] ?? '') !== ''): ?>
             <p class="qa-attrib">&mdash; <?= e(attrib($qa['answer_by'])) ?></p>
             <?php endif; ?>

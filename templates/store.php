@@ -18,6 +18,17 @@ function plain(?string $s): string {
     return trim(preg_replace('/[ \t]+/', ' ', $s));
 }
 
+/** Plain multi-line field: like plain(), but the editor's line breaks survive
+ *  (rendered with nl2br). Runs of blank lines collapse to one blank line. */
+function plain_lines(?string $s): string {
+    $s = strip_tags($s ?? '');
+    $s = html_entity_decode($s, ENT_QUOTES, 'UTF-8');
+    $s = str_replace("\r", '', $s);
+    $s = preg_replace('/[ \t]+/', ' ', $s);
+    $s = preg_replace('/\n{3,}/', "\n\n", $s);
+    return trim($s);
+}
+
 /** Attribution field: plain text with any leading dash/em-dash removed. */
 function attrib(?string $s): string {
     return preg_replace('/^[\x{2014}\x{2013}\x{2212}-]+\s*/u', '', plain($s));
@@ -133,7 +144,7 @@ function sanitize_issue(array $in): array {
                 // The template prepends the em-dash on attributions; strip any
                 // typed one so it never doubles up.
                 'question_by' => attrib($in['flex']['qa']['question_by'] ?? ''),
-                'answer'      => plain($in['flex']['qa']['answer'] ?? ''),
+                'answer'      => plain_lines($in['flex']['qa']['answer'] ?? ''),
                 'answer_by'   => attrib($in['flex']['qa']['answer_by'] ?? ''),
             ],
             'editorial' => [

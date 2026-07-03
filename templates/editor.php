@@ -274,7 +274,7 @@ $houseAd = $settings['house_ad'] ?? [];
           <input type="text" name="flex[qa][question_by]" value="<?= e($flex['qa']['question_by'] ?? '') ?>" data-count="1" data-max="30">
         </div>
         <div class="field">
-          <label>Answer</label>
+          <label>Answer <span class="hint">(Enter starts a new line; it prints)</span></label>
           <textarea name="flex[qa][answer]" rows="6" data-count="1" data-max="490"><?= e($flex['qa']['answer'] ?? '') ?></textarea>
         </div>
         <div class="field">
