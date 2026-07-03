@@ -204,17 +204,18 @@ every month.
 
 **Constants** (a single settings file): tagline, both logos, the five committee emails, the
 colophon address and phone, the "send us photos" submit line, the site URL. Editors touch
-these almost never. (The submit line prints as a single centered line directly below the
-page-1 hero; its old home, the page-2 submit band, was removed in July 2026 to make room
-for the wavy rule under the running head.)
+these almost never. (The submit CTA — title, text, email — prints as a tinted Shout-Outs-style
+box pinned to the bottom of the Spotlight column on page 1, so the ask lands after the
+content; its old home, the page-2 submit band, was removed in July 2026 to make room for
+the wavy rule under the running head.)
 
 **Per-issue content** (one JSON file per issue, e.g. `data/2026-07.json`):
 
 - **Masthead:** issue date, issue number. (The hero banner is a fixed asset in `/assets`, not
   a per-issue upload; see Assets below.)
 - **Spotlight:** icon, headline, body, optional photo + caption, image treatment/crop
-- **Committee Highlights:** exactly 2 items { icon, bold lead-in, text }
-- **Calendar:** exactly 2 events { month, day, title, time and place, note }
+- **Committee Highlights:** 3 item slots { icon, bold lead-in, text }; blank slots don't print
+- **Calendar:** 3 event slots { month, day, title, time and place, note }; blank slots don't print
 - **Friendly Reminder:** { icon, lead-in, text }
 - **Flex slot:** mode (`qa` or `editorial`) plus the matching fields (see section 10)
 - **All Hands on Deck:** intro line + 1 to 3 items { icon, lead-in, text }
@@ -231,11 +232,13 @@ inline formatting versus plain text, and how lead-ins work, see section 12.
 Three kinds of block. This distinction is the heart of the layout and keeps a fixed print
 page from getting away from us.
 
-**Fixed-count blocks.** Always exactly that many, no add/remove.
-- Committee Highlights: exactly 2.
-- Calendar: exactly 2.
-These feed the tight upper-right quadrant of page one; holding their count is what keeps that
-region predictable.
+**Fixed-count blocks.** A fixed number of slots, no add/remove UI; a slot left entirely
+blank is skipped at render (raised from 2 to 3 in July 2026).
+- Committee Highlights: 3 slots.
+- Calendar: 3 slots.
+These feed the tight upper-right quadrant of page one; capping their count is what keeps that
+region predictable. Three full slots in both plus a long Spotlight can overflow — the fit
+warning is the backstop.
 
 **Toggle blocks.** Editor picks a mode per issue.
 - **Flex slot** (page 2): `qa` or `editorial`.

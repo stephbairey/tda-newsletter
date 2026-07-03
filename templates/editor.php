@@ -181,8 +181,8 @@ $houseAd = $settings['house_ad'] ?? [];
         <h2 class="ed-title">Committee Highlights</h2>
         <?php icon_field('committee_highlights[icon]', $issue['committee_highlights']['icon'] ?? 'anchor', 'Section icon'); ?>
       </div>
-      <p class="ed-note">Always exactly two items.</p>
-      <?php foreach (array_slice($issue['committee_highlights']['items'], 0, 2) as $i => $item):
+      <p class="ed-note">Three slots. Leave one blank and it simply won&rsquo;t print.</p>
+      <?php foreach (array_pad(array_slice($issue['committee_highlights']['items'], 0, 3), 3, []) as $i => $item):
           lead_item("committee_highlights[items][$i]", $item, 'Committee name', ['text_max' => 150]);
       endforeach; ?>
     </section>
@@ -192,8 +192,8 @@ $houseAd = $settings['house_ad'] ?? [];
         <h2 class="ed-title">On the Calendar</h2>
         <?php icon_field('calendar[icon]', $issue['calendar']['icon'] ?? 'calendar', 'Section icon'); ?>
       </div>
-      <p class="ed-note">Always exactly two events. Use a 3-letter abbreviation for the month (&lsquo;AUG&rsquo;) and a numerical date (&lsquo;4&rsquo;).</p>
-      <?php foreach (array_slice($issue['calendar']['events'], 0, 2) as $i => $ev):
+      <p class="ed-note">Three slots; leave one blank and it simply won&rsquo;t print. Use a 3-letter abbreviation for the month (&lsquo;AUG&rsquo;) and a numerical date (&lsquo;4&rsquo;).</p>
+      <?php foreach (array_pad(array_slice($issue['calendar']['events'], 0, 3), 3, []) as $i => $ev):
           // Stored as one "time · place" line; split for editing, rejoined on save.
           $ww = explode(' · ', $ev['when_where'] ?? '', 2);
       ?>

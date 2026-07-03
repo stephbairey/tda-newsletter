@@ -26,7 +26,6 @@ $img = $sp['image'] ?? [];
   <div class="hero">
     <img class="hero-img" src="<?= e(hero_src()) ?>" alt="Tomahawk Island moorage with Mt. Hood">
   </div>
-  <p class="submit-line"><?= e($settings['submit_text'] ?? '') ?> <span class="submit-email"><?= e($settings['submit_email'] ?? '') ?></span></p>
 
   <div class="p1-body">
 
@@ -45,12 +44,24 @@ $img = $sp['image'] ?? [];
         <?php endif; ?>
         <?= rich_paras($sp['body'] ?? '') ?>
       </div>
+
+      <?php // Submit CTA: same UX as Shout-Outs, pinned to the column bottom. ?>
+      <div class="submit-box">
+        <?= section_header(($settings['submit_title'] ?? '') !== '' ? $settings['submit_title'] : 'Get Involved', null) ?>
+        <div class="icon-item">
+          <?= tda_icon(null, 18, 'item-icon') ?>
+          <p class="submit-text"><?= e($settings['submit_text'] ?? '') ?> <span class="submit-email"><?= e($settings['submit_email'] ?? '') ?></span></p>
+        </div>
+      </div>
     </div>
 
     <div class="p1-right">
       <?= section_header('Committee Highlights', $ch['icon'] ?? null) ?>
       <div class="highlights">
-        <?php foreach (array_slice($ch['items'] ?? [], 0, 2) as $i => $item): ?>
+        <?php // Three slots; blank ones are skipped so two-item months print clean.
+          $chItems = array_values(array_filter(array_slice($ch['items'] ?? [], 0, 3),
+              fn($it) => trim(($it['lead'] ?? '') . strip_tags($it['text'] ?? '')) !== '')); ?>
+        <?php foreach ($chItems as $i => $item): ?>
         <?php if ($i > 0): ?><div class="item-divider"></div><?php endif; ?>
         <div class="icon-item">
           <?= tda_icon($item['icon'] ?? null, 16, 'item-icon') ?>
@@ -63,7 +74,10 @@ $img = $sp['image'] ?? [];
       </div>
 
       <?= section_header('On the Calendar', $cal['icon'] ?? null, 'sec-head-calendar') ?>
-      <?php foreach (array_slice($cal['events'] ?? [], 0, 2) as $i => $ev): ?>
+      <?php $calEvents = array_values(array_filter(array_slice($cal['events'] ?? [], 0, 3),
+          fn($e) => trim(($e['title'] ?? '') . ($e['month'] ?? '') . ($e['day'] ?? '')
+              . ($e['when_where'] ?? '') . ($e['note'] ?? '') . ($e['muted_note'] ?? '')) !== '')); ?>
+      <?php foreach ($calEvents as $i => $ev): ?>
       <?php if ($i > 0): ?><div class="item-divider"></div><?php endif; ?>
       <div class="cal-event">
         <div class="cal-chip">

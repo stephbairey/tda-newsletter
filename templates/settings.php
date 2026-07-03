@@ -50,8 +50,12 @@ $s = $settings;
     </fieldset>
 
     <fieldset>
-      <legend>Submit line (photos / tips / questions)</legend>
-      <p class="ed-note">Prints as a single line directly below the page-1 hero image.</p>
+      <legend>Submit box (photos / tips / questions)</legend>
+      <p class="ed-note">Prints as a tinted box under the Spotlight on page 1.</p>
+      <div class="field">
+        <label>Section title</label>
+        <input type="text" name="submit_title" value="<?= e($s['submit_title'] ?? '') ?>" placeholder="Get Involved">
+      </div>
       <div class="field">
         <label>Text</label>
         <input type="text" name="submit_text" value="<?= e($s['submit_text'] ?? '') ?>">

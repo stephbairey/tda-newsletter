@@ -149,15 +149,11 @@ body.grayscale .sheet { filter: grayscale(1); }
    geometry fixed: a differently-proportioned upload crops instead of reflowing. */
 .hero-img { display: block; width: 100%; height: 1.5in; object-fit: cover; }
 
-/* Submit line: single centered line directly below the hero. */
-.submit-line {
-  margin-top: 6px;
-  text-align: center;
-  font-size: 13px;
-  line-height: 1.4;
-  white-space: nowrap;
-  overflow: hidden;
-}
+/* Submit CTA: tinted box like Shout-Outs, pinned to the bottom of the
+   Spotlight column so it lands after the reader has the content. */
+.submit-box { background: var(--tint); padding: 15px 16px 16px; margin-top: auto; }
+.submit-box .sec-head { margin-bottom: 10px; }
+.submit-text { font-size: 13px; line-height: 1.5; }
 .submit-email { color: var(--blue); font-weight: 700; }
 
 /* ===== Page 1 body ===== */
@@ -182,7 +178,7 @@ body.grayscale .sheet { filter: grayscale(1); }
   white-space: nowrap;
   overflow: hidden;
 }
-.spotlight-body { font-size: 13px; line-height: 1.52; overflow: hidden; }
+.spotlight-body { font-size: 13px; line-height: 1.52; overflow: hidden; margin-bottom: 14px; }
 .spotlight-body p { margin-bottom: 8px; }
 .spotlight-body p:last-child { margin-bottom: 0; }
 
