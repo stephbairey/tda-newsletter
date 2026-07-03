@@ -190,7 +190,7 @@ body.grayscale .sheet { filter: grayscale(1); }
 }
 .spotlight-photo img { display: block; width: 100%; object-fit: cover; }
 .treatment-portrait-float { float: left; width: 153px; margin: 3px 15px 9px 0; }
-.treatment-portrait-float img { height: 220px; }
+.treatment-portrait-float img { height: 230px; }
 .treatment-landscape-banner { width: 100%; margin: 0 0 10px; }
 .treatment-landscape-banner img { height: 150px; }
 .spotlight-caption {

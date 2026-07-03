@@ -81,7 +81,7 @@ function image_field(string $prefix, array $img, string $defaultTreatment): void
             <input type="text" name="<?= e($prefix) ?>[caption]" value="<?= e($img['caption'] ?? '') ?>" data-count="1" data-max="50">
           </div>
           <div class="field">
-            <label>Upload a new photo (JPG, PNG, or WebP). Best size: 150x220 px, 300 dpi.</label>
+            <label>Upload a new photo (JPG, PNG, or WebP). Best size: 150x230 px, 300 dpi.</label>
             <input type="file" class="photo-upload" accept="image/jpeg,image/png,image/webp">
             <span class="photo-upload-status"></span>
           </div>

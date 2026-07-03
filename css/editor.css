@@ -347,7 +347,7 @@ legend {
 }
 .photo-frame:active { cursor: grabbing; }
 /* Editor preview frames mirror the print treatments at print scale. */
-.photo-frame.treatment-portrait-float { width: 153px; height: 220px; }
+.photo-frame.treatment-portrait-float { width: 153px; height: 230px; }
 .photo-frame.treatment-landscape-banner { width: 340px; height: 150px; }
 .photo-frame img {
   width: 100%;
