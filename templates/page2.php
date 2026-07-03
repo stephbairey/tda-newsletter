@@ -25,7 +25,7 @@ $dateLine = ucwords(strtolower($issue['issue']['date_label'] ?? ''));
     </div>
     <div class="running-issue"><?= e($dateLine) ?> &nbsp;&middot;&nbsp; Issue No. <?= e((string)($issue['issue']['number'] ?? '')) ?></div>
   </div>
-  <?= wave_rule('p2') ?>
+  <img class="wave-rule-img" src="<?= asset('assets/wavy-line.png') ?>" alt="">
 
   <div class="p2-grid">
 
@@ -126,10 +126,6 @@ $dateLine = ucwords(strtolower($issue['issue']['date_label'] ?? ''));
       </div>
     </div>
 
-  </div>
-
-  <div class="submit-band">
-    <p><?= e($settings['submit_text'] ?? '') ?> <span class="submit-email"><?= e($settings['submit_email'] ?? '') ?></span></p>
   </div>
 
   <?= page_footer($settings) ?>

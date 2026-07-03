@@ -123,20 +123,6 @@ function section_header(string $label, ?string $iconId, string $marginClass = ''
         . '</div>';
 }
 
-/** Masthead wave rule. Each instance needs a unique pattern id. */
-function wave_rule(string $uid): string {
-    return <<<SVG
-<svg class="wave-rule" width="100%" height="12" aria-hidden="true">
-  <defs>
-    <pattern id="mw-$uid" width="26" height="12" patternUnits="userSpaceOnUse">
-      <path d="M0 6 q6.5 -5 13 0 t13 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path>
-    </pattern>
-  </defs>
-  <rect width="100%" height="12" fill="url(#mw-$uid)"></rect>
-</svg>
-SVG;
-}
-
 /** Footer + colophon, identical on both pages. */
 function page_footer(array $settings): string {
     $emails = '';

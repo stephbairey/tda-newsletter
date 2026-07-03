@@ -101,7 +101,9 @@ body.grayscale .sheet { filter: grayscale(1); }
 .item-divider-ah { margin: 12px 0; }
 .col-divider { width: 1px; background: var(--rule); flex: none; }
 
-.wave-rule { display: block; margin-top: 4px; color: var(--blue); }
+/* The wavy rule is a print-safe PNG (the SVG pattern printed poorly). Page 1's
+   is baked into the hero image; page 2 places this one under the running head. */
+.wave-rule-img { display: block; width: 100%; height: auto; margin-top: 4px; }
 
 /* ===== Masthead (page 1) ===== */
 .masthead {
@@ -377,16 +379,6 @@ body.grayscale .sheet { filter: grayscale(1); }
   margin-bottom: 6px;
 }
 .trivia-text { font-size: 13px; line-height: 1.55; }
-
-/* Submit band */
-.submit-band {
-  border-top: 2.5px solid var(--blue);
-  margin-top: 22px;
-  padding-top: 14px;
-  text-align: center;
-}
-.submit-band p { font-size: 13.5px; line-height: 1.5; }
-.submit-email { color: var(--blue); font-weight: 700; }
 
 /* ===== Print (keep last: must override the screen rules above) ===== */
 @media print {

@@ -204,7 +204,9 @@ every month.
 
 **Constants** (a single settings file): tagline, both logos, the five committee emails, the
 colophon address and phone, the "send us photos" submit line, the site URL. Editors touch
-these almost never.
+these almost never. (The submit line is stored and editable but currently prints nowhere:
+the page-2 submit band was removed in July 2026 to make room for the wavy rule under the
+running head. The copy is parked in Settings until it gets a new home.)
 
 **Per-issue content** (one JSON file per issue, e.g. `data/2026-07.json`):
 
@@ -291,6 +293,9 @@ bounded, and copyfitting still works. Uploaded originals land in `uploads/`.
     per-issue content. Settings can upload a replacement, stored as
     `uploads/masthead-hero.*` (deploy-proof; only the latest upload is kept), which wins
     over this asset on every issue.
+  - `wavy-line.png` — the wavy rule as a raster (2250px wide, ~300dpi). The original SVG
+    pattern printed poorly, so page 1's wave is now baked into the hero image and page 2
+    renders this PNG under the running head. The `wave_rule()` SVG helper was removed.
 - `/icons/svg` (static, deploys): the editor-selectable SVG icon set (section 16).
 - `/uploads` (CMS content, excluded from deploy):
   - `josh-talia.jpg` — the issue-one Spotlight photo. Spotlight photos are per-issue, so they

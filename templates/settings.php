@@ -50,7 +50,9 @@ $s = $settings;
     </fieldset>
 
     <fieldset>
-      <legend>Submit band (page 2)</legend>
+      <legend>Submit line (photos / tips / questions)</legend>
+      <p class="ed-note">Not printed anywhere right now — the old band at the bottom of page 2
+        was removed to make room for the wavy rule. The text is kept here until it gets a new home.</p>
       <div class="field">
         <label>Text</label>
         <input type="text" name="submit_text" value="<?= e($s['submit_text'] ?? '') ?>">

@@ -22,7 +22,6 @@ $img = $sp['image'] ?? [];
       <div class="issue-no">Issue No. <?= e((string)($issue['issue']['number'] ?? '')) ?></div>
     </div>
   </div>
-  <?= wave_rule('p1') ?>
 
   <div class="hero">
     <img class="hero-img" src="<?= e(hero_src()) ?>" alt="Tomahawk Island moorage with Mt. Hood">
