@@ -83,7 +83,10 @@ $dateLine = ucwords(strtolower($issue['issue']['date_label'] ?? ''));
         <?php if ($i > 0): ?><div class="item-divider item-divider-ah"></div><?php endif; ?>
         <div class="icon-item">
           <?= tda_icon($item['icon'] ?? null, 18, 'item-icon') ?>
-          <p class="ah-item-text"><strong><?= e($item['lead'] ?? '') ?></strong> <?= rich($item['text'] ?? '') ?></p>
+          <?php // Strip the joint here too, so issues saved before the rule render clean.
+            $ahLead = preg_replace('/[\s\x{00B7}]+$/u', '', trim($item['lead'] ?? ''));
+            $ahText = preg_replace('/^[\s\x{00B7}]+/u', '', trim(rich($item['text'] ?? ''))); ?>
+          <p class="ah-item-text"><strong><?= e($ahLead) ?></strong><?= $ahLead !== '' && $ahText !== '' ? ' · ' : ' ' ?><?= $ahText ?></p>
         </div>
         <?php endforeach; ?>
       </div>

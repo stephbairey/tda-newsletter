@@ -86,10 +86,12 @@ function sanitize_issue(array $in): array {
         while (count($out) < $min) $out[] = $fn([]);
         return $out;
     };
+    // The template renders "lead · text"; strip whitespace and any typed
+    // middot from the joint so the separator never doubles (as committee does).
     $leadText = fn(array $i) => [
         'icon' => icon_id($i['icon'] ?? ''),
-        'lead' => plain($i['lead'] ?? ''),
-        'text' => rich_line($i['text'] ?? ''),
+        'lead' => preg_replace('/[\s\x{00B7}]+$/u', '', plain($i['lead'] ?? '')),
+        'text' => preg_replace('/^[\s\x{00B7}]+/u', '', rich_line($i['text'] ?? '')),
     ];
 
     return [
