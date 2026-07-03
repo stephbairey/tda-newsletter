@@ -11,7 +11,7 @@ $adminTitle = 'Edit ' . ($issue['issue']['date_label'] ?? $issueId);
 /**
  * Rich text widget. $multi allows paragraphs (Enter); single-line fields don't.
  * $opts feeds the character-limit engine in editor.js:
- *   'max'    => int     hard cap on visible characters
+ *   'max'    => int     soft cap on visible characters (counter warns, never blocks)
  *   'group'  => string  shares a combined cap with other fields (see data-group-counter)
  *   'limits' => array   photo-dependent caps, keyed 'none' / treatment name
  */
@@ -78,7 +78,7 @@ function image_field(string $prefix, array $img, string $defaultTreatment): void
           </div>
           <div class="field">
             <label>Caption (optional)</label>
-            <input type="text" name="<?= e($prefix) ?>[caption]" value="<?= e($img['caption'] ?? '') ?>" maxlength="50" data-count="1">
+            <input type="text" name="<?= e($prefix) ?>[caption]" value="<?= e($img['caption'] ?? '') ?>" data-count="1" data-max="50">
           </div>
           <div class="field">
             <label>Upload a new photo (JPG, PNG, or WebP). Best size: 150x220 px, 300 dpi.</label>
@@ -166,7 +166,7 @@ $houseAd = $settings['house_ad'] ?? [];
       </div>
       <div class="field">
         <label>Headline <span class="hint">(one printed line: 10–30 characters)</span></label>
-        <input type="text" name="spotlight[headline]" value="<?= e($sp['headline'] ?? '') ?>" maxlength="30" data-count="1" data-min="10">
+        <input type="text" name="spotlight[headline]" value="<?= e($sp['headline'] ?? '') ?>" data-count="1" data-max="30" data-min="10">
       </div>
       <?php image_field('spotlight[image]', $sp['image'] ?? [], 'portrait-float'); ?>
       <div class="field">
@@ -209,7 +209,7 @@ $houseAd = $settings['house_ad'] ?? [];
         <div class="cal-item-fields">
           <div class="field">
             <label>Event title</label>
-            <input type="text" name="calendar[events][<?= $i ?>][title]" value="<?= e($ev['title'] ?? '') ?>" maxlength="30" data-count="1">
+            <input type="text" name="calendar[events][<?= $i ?>][title]" value="<?= e($ev['title'] ?? '') ?>" data-count="1" data-max="30">
           </div>
           <div class="field-row">
             <div class="field">
@@ -218,17 +218,17 @@ $houseAd = $settings['house_ad'] ?? [];
             </div>
             <div class="field">
               <label>Place</label>
-              <input type="text" name="calendar[events][<?= $i ?>][where]" value="<?= e($ww[1] ?? '') ?>" maxlength="25" data-count="1">
+              <input type="text" name="calendar[events][<?= $i ?>][where]" value="<?= e($ww[1] ?? '') ?>" data-count="1" data-max="25">
             </div>
           </div>
           <div class="field-row">
             <div class="field">
               <label>Note</label>
-              <input type="text" name="calendar[events][<?= $i ?>][note]" value="<?= e($ev['note'] ?? '') ?>" maxlength="30" data-count="1">
+              <input type="text" name="calendar[events][<?= $i ?>][note]" value="<?= e($ev['note'] ?? '') ?>" data-count="1" data-max="30">
             </div>
             <div class="field">
               <label>Call to action</label>
-              <input type="text" name="calendar[events][<?= $i ?>][muted_note]" value="<?= e($ev['muted_note'] ?? '') ?>" maxlength="30" data-count="1">
+              <input type="text" name="calendar[events][<?= $i ?>][muted_note]" value="<?= e($ev['muted_note'] ?? '') ?>" data-count="1" data-max="30">
             </div>
           </div>
         </div>
@@ -267,19 +267,19 @@ $houseAd = $settings['house_ad'] ?? [];
         <?php icon_field('flex[qa][icon]', $flex['qa']['icon'] ?? 'envelope', 'Section icon'); ?>
         <div class="field">
           <label>Question</label>
-          <textarea name="flex[qa][question]" rows="3" maxlength="300" data-count="1"><?= e($flex['qa']['question'] ?? '') ?></textarea>
+          <textarea name="flex[qa][question]" rows="3" data-count="1" data-max="300"><?= e($flex['qa']['question'] ?? '') ?></textarea>
         </div>
         <div class="field">
           <label>Asked by <span class="hint">(e.g. Tom Gentry, Slip 570 — the dash is added for you)</span></label>
-          <input type="text" name="flex[qa][question_by]" value="<?= e($flex['qa']['question_by'] ?? '') ?>" maxlength="30" data-count="1">
+          <input type="text" name="flex[qa][question_by]" value="<?= e($flex['qa']['question_by'] ?? '') ?>" data-count="1" data-max="30">
         </div>
         <div class="field">
           <label>Answer</label>
-          <textarea name="flex[qa][answer]" rows="6" maxlength="490" data-count="1"><?= e($flex['qa']['answer'] ?? '') ?></textarea>
+          <textarea name="flex[qa][answer]" rows="6" data-count="1" data-max="490"><?= e($flex['qa']['answer'] ?? '') ?></textarea>
         </div>
         <div class="field">
           <label>Answered by</label>
-          <input type="text" name="flex[qa][answer_by]" value="<?= e($flex['qa']['answer_by'] ?? '') ?>" maxlength="30" data-count="1">
+          <input type="text" name="flex[qa][answer_by]" value="<?= e($flex['qa']['answer_by'] ?? '') ?>" data-count="1" data-max="30">
         </div>
       </div>
 
@@ -287,7 +287,7 @@ $houseAd = $settings['house_ad'] ?? [];
         <?php icon_field('flex[editorial][icon]', $flex['editorial']['icon'] ?? 'house-on-water', 'Section icon'); ?>
         <div class="field">
           <label>Headline <span class="hint">(one printed line: 10–30 characters)</span></label>
-          <input type="text" name="flex[editorial][headline]" value="<?= e($flex['editorial']['headline'] ?? '') ?>" maxlength="30" data-count="1" data-min="10">
+          <input type="text" name="flex[editorial][headline]" value="<?= e($flex['editorial']['headline'] ?? '') ?>" data-count="1" data-max="30" data-min="10">
         </div>
         <?php image_field('flex[editorial][image]', $flex['editorial']['image'] ?? [], 'landscape-banner'); ?>
         <div class="field">

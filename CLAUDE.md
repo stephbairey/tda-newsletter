@@ -344,9 +344,10 @@ infuriating mid-edit. Make the warning loud and obvious for the backup editor's 
 visible text length, not the HTML string, or the tags inflate the count into nonsense.
 
 **Character limits are discovered, not guessed.** They were discovered in the July 2026
-stress test and are now enforced in the editor (maxlength on plain fields, typing blocked at
-the cap on rich fields, live counters under every limited field). Counts are of rendered
-text, per above. The caps (defined in `templates/editor.php`):
+stress test. They are **soft caps**: nothing blocks typing or pasting past a limit (hard
+enforcement misbehaved on paste and was removed in July 2026). The live counter under every
+limited field is the warning — over the cap it turns red on a pale red band. Counts are of
+rendered text, per above. The caps (defined in `templates/editor.php`):
 
 - Headlines (Spotlight, Editorial): 10–30 chars; the printed headline is **one line, no
   wrap** (`white-space: nowrap`), which is what forces brevity.

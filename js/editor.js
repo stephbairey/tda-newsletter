@@ -62,12 +62,10 @@
 
   function bindRichArea(area) {
     // Paste as plain text: the single most important safeguard (section 12).
-    // Trimmed to the room left under the field's character limit, if any.
+    // Length is NOT enforced here; the over-limit counter is the warning.
     area.addEventListener('paste', function (ev) {
       ev.preventDefault();
       var text = (ev.clipboardData || window.clipboardData).getData('text/plain');
-      var room = insertRoom(area.closest('.rich'));
-      if (room !== null && text.length > room) text = text.slice(0, Math.max(0, room));
       if (text) document.execCommand('insertText', false, text);
     });
     // Single-line fields have no paragraphs.
@@ -262,9 +260,9 @@
   }
 
   /* ================= Character limits & live counters =================
-   * Counts VISIBLE text (never markup, section 12). Plain inputs also carry
-   * maxlength; rich areas and combined groups are enforced here by blocking
-   * further typing at the cap. Paste is trimmed to fit in bindRichArea. */
+   * Counts VISIBLE text (never markup, section 12). Caps are soft: nothing
+   * blocks typing or pasting past a limit — the counter goes loud (red text
+   * on a pale red band) and the editor copyfits deliberately. */
 
   // Visible character count of a .rich widget or a plain input/textarea.
   function richLen(rich) {
@@ -299,39 +297,13 @@
     return sum;
   }
 
-  // How many characters can still be inserted into a rich field (null = no cap).
-  function insertRoom(rich) {
-    if (!rich) return null;
-    var room = null;
-    var max = resolveMax(rich);
-    if (max) room = max - richLen(rich);
-    var g = rich.dataset.group;
-    if (g && groupMaxes[g]) {
-      var gr = groupMaxes[g] - groupLen(g);
-      room = room === null ? gr : Math.min(room, gr);
-    }
-    return room;
-  }
-
-  // Block typing past a cap (deletes and formatting always allowed).
-  document.addEventListener('beforeinput', function (ev) {
-    if (!ev.inputType || ev.inputType.indexOf('insert') !== 0) return;
-    var t = ev.target;
-    if (t.classList && t.classList.contains('rich-area')) {
-      var room = insertRoom(t.closest('.rich'));
-      if (room !== null && room <= 0) ev.preventDefault();
-    } else if (t.dataset && t.dataset.group && groupMaxes[t.dataset.group]) {
-      if (groupLen(t.dataset.group) >= groupMaxes[t.dataset.group]) ev.preventDefault();
-    }
-  });
-
   // Build the counter elements.
   var counters = [];
   document.querySelectorAll('[data-count]').forEach(function (el) {
     var out = document.createElement('div');
     out.className = 'char-count';
     el.insertAdjacentElement('afterend', out);
-    counters.push({ el: el, out: out, max: +el.getAttribute('maxlength') || null, min: +el.dataset.min || 0 });
+    counters.push({ el: el, out: out, max: +el.dataset.max || null, min: +el.dataset.min || 0 });
   });
   document.querySelectorAll('.rich[data-max], .rich[data-limits]').forEach(function (rich) {
     var out = document.createElement('div');

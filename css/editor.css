@@ -383,7 +383,14 @@ legend {
   margin-top: 3px;
   text-align: right;
 }
-.char-count.over { color: #b03030; font-weight: 700; }
+.char-count.over {
+  color: #b03030;
+  font-weight: 700;
+  background: #fbe4e4;      /* pale red band: caps are soft, this is the warning */
+  border-radius: 3px;
+  padding: 2px 7px;
+  margin-top: 4px;
+}
 .char-count.under-min { color: var(--warn-border); font-weight: 700; }
 
 /* Inline field warning (e.g. month misspelling) */
