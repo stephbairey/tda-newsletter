@@ -26,6 +26,7 @@ $img = $sp['image'] ?? [];
   <div class="hero">
     <img class="hero-img" src="<?= e(hero_src()) ?>" alt="Tomahawk Island moorage with Mt. Hood">
   </div>
+  <p class="submit-line"><?= e($settings['submit_text'] ?? '') ?> <span class="submit-email"><?= e($settings['submit_email'] ?? '') ?></span></p>
 
   <div class="p1-body">
 

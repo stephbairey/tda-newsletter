@@ -204,9 +204,9 @@ every month.
 
 **Constants** (a single settings file): tagline, both logos, the five committee emails, the
 colophon address and phone, the "send us photos" submit line, the site URL. Editors touch
-these almost never. (The submit line is stored and editable but currently prints nowhere:
-the page-2 submit band was removed in July 2026 to make room for the wavy rule under the
-running head. The copy is parked in Settings until it gets a new home.)
+these almost never. (The submit line prints as a single centered line directly below the
+page-1 hero; its old home, the page-2 submit band, was removed in July 2026 to make room
+for the wavy rule under the running head.)
 
 **Per-issue content** (one JSON file per issue, e.g. `data/2026-07.json`):
 
@@ -288,9 +288,11 @@ bounded, and copyfitting still works. Uploaded originals land in `uploads/`.
     handoff's `tda-anchor-cut.png`.** The design reference and the `.dc.html` both point at the
     old PNG; use this SVG instead and repoint. Vector, so it stays crisp at any print size.
   - `currents-hero.png` — the Mt. Hood masthead banner, already preprocessed and sized for
-    print, with the oval Tomahawk Island logo baked into the image (no separate overlay;
-    the handoff's `tda-vector-logo.png` was removed). Treated as a fixed banner, not
-    per-issue content. Settings can upload a replacement, stored as
+    print, with the oval Tomahawk Island logo and the wavy top rule baked into the image
+    (no separate overlay; the handoff's `tda-vector-logo.png` was removed). Authored at
+    **2250x450 (5:1)**; the CSS renders the hero at the full content width x 1.5in with
+    `object-fit: cover`, so other shapes crop rather than reflow page 1. Treated as a
+    fixed banner, not per-issue content. Settings can upload a replacement, stored as
     `uploads/masthead-hero.*` (deploy-proof; only the latest upload is kept), which wins
     over this asset on every issue.
   - `wavy-line.png` — the wavy rule as a raster (2250px wide, ~300dpi). The original SVG

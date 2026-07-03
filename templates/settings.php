@@ -51,8 +51,7 @@ $s = $settings;
 
     <fieldset>
       <legend>Submit line (photos / tips / questions)</legend>
-      <p class="ed-note">Not printed anywhere right now — the old band at the bottom of page 2
-        was removed to make room for the wavy rule. The text is kept here until it gets a new home.</p>
+      <p class="ed-note">Prints as a single line directly below the page-1 hero image.</p>
       <div class="field">
         <label>Text</label>
         <input type="text" name="submit_text" value="<?= e($s['submit_text'] ?? '') ?>">
@@ -67,7 +66,7 @@ $s = $settings;
       <legend>Masthead image (page 1 hero)</legend>
       <img class="hero-preview" src="<?= e(hero_src()) ?>" alt="Current masthead image">
       <div class="field">
-        <label>Upload a replacement (JPG, PNG, or WebP; at least 1500px wide, 2250px prints best)</label>
+        <label>Upload a replacement (JPG, PNG, or WebP; 2250&times;450 px is the target &mdash; other shapes are cropped to fit)</label>
         <input type="file" name="hero" accept="image/jpeg,image/png,image/webp">
       </div>
       <p class="ed-note">Replaces the image on every issue, past and future. Only the latest upload is kept.</p>

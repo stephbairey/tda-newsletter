@@ -145,7 +145,20 @@ body.grayscale .sheet { filter: grayscale(1); }
 
 /* ===== Hero ===== */
 .hero { margin-top: 12px; line-height: 0; }
-.hero-img { display: block; width: 100%; height: auto; }
+/* The hero is authored at 2250x450 (5:1). Encoding the height keeps page-1
+   geometry fixed: a differently-proportioned upload crops instead of reflowing. */
+.hero-img { display: block; width: 100%; height: 1.5in; object-fit: cover; }
+
+/* Submit line: single centered line directly below the hero. */
+.submit-line {
+  margin-top: 6px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.submit-email { color: var(--blue); font-weight: 700; }
 
 /* ===== Page 1 body ===== */
 .p1-body {
