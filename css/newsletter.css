@@ -1,6 +1,7 @@
 /* TDA Currents — newsletter stylesheet.
  * The page box is authored in inches (section 5 of CLAUDE.md): 8.5x11 sheet,
- * 0.5in padding. On screen the browser maps 1in to 96px (816x1056). All
+ * 0.5in padding, trimmed to 0.35in at the bottom. On screen the browser maps
+ * 1in to 96px (816x1056). All
  * interior measurements stay in px, identical to the design reference. */
 
 :root {
@@ -31,7 +32,7 @@ body.grayscale .sheet { filter: grayscale(1); }
 .sheet {
   width: 8.5in;
   height: 11in;
-  padding: 0.5in;
+  padding: 0.5in 0.5in 0.35in;
   margin: 26px auto;
   background: #fff;
   box-shadow: 0 12px 40px rgba(30, 55, 85, .22);
@@ -151,7 +152,7 @@ body.grayscale .sheet { filter: grayscale(1); }
 
 /* Submit CTA: tinted box like Shout-Outs, pinned to the bottom of the
    Spotlight column so it lands after the reader has the content. */
-.submit-box { background: var(--tint); padding: 15px 16px 16px; margin-top: auto; }
+.submit-box { background: var(--tint); padding: 10px; margin-top: auto; margin-bottom: 5px; }
 .submit-box .sec-head { margin-bottom: 10px; }
 .submit-text { font-size: 13px; line-height: 1.5; }
 .submit-email { color: var(--blue); font-weight: 700; }
@@ -399,7 +400,7 @@ body.grayscale .sheet { filter: grayscale(1); }
     break-after: page;
     /* Monolithic sheet, a hair under 11in: fragmentation can never push a
        sliver (e.g. the colophon line) onto an extra page; the 2px comes out
-       of the 0.5in bottom padding. */
+       of the 0.35in bottom padding. */
     break-inside: avoid;
     height: calc(11in - 2px);
   }

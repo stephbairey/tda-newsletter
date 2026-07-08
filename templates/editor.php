@@ -172,7 +172,7 @@ $houseAd = $settings['house_ad'] ?? [];
       <div class="field">
         <label>Story <span class="hint">(Enter starts a new paragraph)</span></label>
         <?php rich_field('spotlight[body]', $sp['body'] ?? '', true,
-            ['limits' => ['none' => 1200, 'portrait-float' => 850, 'landscape-banner' => 650]]); ?>
+            ['limits' => ['none' => 950, 'portrait-float' => 675, 'landscape-banner' => 450]]); ?>
       </div>
     </section>
 

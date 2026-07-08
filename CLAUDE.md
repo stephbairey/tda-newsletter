@@ -69,15 +69,16 @@ marks** are needed. This is the simplest print case.
 stays out of the CSS:
 
 ```css
-.page  { width: 8.5in; height: 11in; padding: 0.5in; }
+.page  { width: 8.5in; height: 11in; padding: 0.5in 0.5in 0.35in; }
 @page  { size: letter; margin: 0; }
 ```
 
 On print, inches map to real inches. On screen, the browser renders 1in as 96px, giving an
-816 x 1056 display for free. The content area falls out of the padding at 7.5 x 10in, no
-separate declaration needed. (The design reference authored these in px, 816 x 1056 with
-48px padding, which is numerically identical. If recreating from the `.dc.html`, convert to
-inches for print clarity.)
+816 x 1056 display for free. The content area falls out of the padding at 7.5 x 10.15in (the
+bottom margin was trimmed from 0.5in to 0.35in to gain a line of vertical room on both
+pages), no separate declaration needed. (The design reference authored the box in px, 816 x
+1056 with a uniform 48px padding; if recreating from the `.dc.html`, convert to inches for
+print clarity and trim the bottom pad.)
 
 Each page is its own sheet: `break-after: page` between them. Keep the mockup's grayscale
 preview toggle (`filter: grayscale(1)` on the page root) as a nice-to-have for previewing a
@@ -353,7 +354,7 @@ rendered text, per above. The caps (defined in `templates/editor.php`):
 
 - Headlines (Spotlight, Editorial): 10–30 chars; the printed headline is **one line, no
   wrap** (`white-space: nowrap`), which is what forces brevity.
-- Spotlight body: 1200 no photo / 850 portrait / 650 landscape (the cap follows the photo
+- Spotlight body: 950 no photo / 675 portrait / 450 landscape (the cap follows the photo
   toggle and treatment). Editorial body: 885 / 850 / 500. Captions: 50.
 - Committee Highlights item text: 150 each. Calendar: title/note/call-to-action 30, place 25.
 - Friendly Reminder: lead-in + text **combined** 125.
