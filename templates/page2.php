@@ -79,7 +79,7 @@ $dateLine = ucwords(strtolower($issue['issue']['date_label'] ?? ''));
       <div class="p2-col">
         <?= section_header('All Hands on Deck', $ah['icon'] ?? null, 'sec-head-p2') ?>
         <p class="ah-intro"><?= rich($ah['intro'] ?? '') ?></p>
-        <?php foreach (array_slice($ah['items'] ?? [], 0, 3) as $i => $item): ?>
+        <?php foreach (array_slice($ah['items'] ?? [], 0, 4) as $i => $item): ?>
         <?php if ($i > 0): ?><div class="item-divider item-divider-ah"></div><?php endif; ?>
         <div class="icon-item">
           <?= tda_icon($item['icon'] ?? null, 18, 'item-icon') ?>

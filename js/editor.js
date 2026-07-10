@@ -209,7 +209,7 @@
     });
   });
 
-  /* ================= All Hands: 1–3 items ================= */
+  /* ================= All Hands: 1–4 items ================= */
 
   var ahWrap = document.getElementById('all-hands-items');
   var ahAdd = document.getElementById('ah-add');
@@ -223,7 +223,7 @@
       });
     });
     var n = ahItems().length;
-    if (ahAdd) ahAdd.hidden = n >= 3;
+    if (ahAdd) ahAdd.hidden = n >= 4;
     ahItems().forEach(function (item) {
       item.querySelector('.ah-remove').hidden = n <= 1;
     });
@@ -231,7 +231,7 @@
 
   if (ahWrap && ahAdd) {
     ahAdd.addEventListener('click', function () {
-      if (ahItems().length >= 3) return;
+      if (ahItems().length >= 4) return;
       var clone = ahItems()[0].cloneNode(true);
       clone.querySelectorAll('input[type="text"]').forEach(function (el) { el.value = ''; });
       clone.querySelectorAll('.rich-area').forEach(function (el) { el.innerHTML = ''; });

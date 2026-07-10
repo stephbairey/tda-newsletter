@@ -307,9 +307,9 @@ $houseAd = $settings['house_ad'] ?? [];
         <label>Intro line</label>
         <?php rich_field('all_hands[intro]', $issue['all_hands']['intro'] ?? '', false, ['group' => 'ah']); ?>
       </div>
-      <p class="ed-note">Between 1 and 3 items. The count below combines the intro and every item.</p>
+      <p class="ed-note">Between 1 and 4 items. The count below combines the intro and every item.</p>
       <div id="all-hands-items">
-        <?php foreach (array_slice($issue['all_hands']['items'], 0, 3) as $i => $item): ?>
+        <?php foreach (array_slice($issue['all_hands']['items'], 0, 4) as $i => $item): ?>
         <div class="ah-item">
           <?php lead_item("all_hands[items][$i]", $item, 'Lead-in', ['group' => 'ah']); ?>
           <button type="button" class="btn btn-small ah-remove">Remove</button>

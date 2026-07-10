@@ -159,7 +159,7 @@ function sanitize_issue(array $in): array {
         'all_hands' => [
             'icon'  => icon_id($in['all_hands']['icon'] ?? ''),
             'intro' => rich_line($in['all_hands']['intro'] ?? ''),
-            'items' => $items($in['all_hands']['items'] ?? [], 1, 3, $leadText),
+            'items' => $items($in['all_hands']['items'] ?? [], 1, 4, $leadText),
         ],
         'shout_outs' => [
             'icon'      => icon_id($in['shout_outs']['icon'] ?? ''),
