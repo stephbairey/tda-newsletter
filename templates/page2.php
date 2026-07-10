@@ -36,7 +36,7 @@ $dateLine = ucwords(strtolower($issue['issue']['date_label'] ?? ''));
         <div class="qa-block qa-question">
           <span class="qa-initial qa-q">Q</span>
           <div>
-            <p class="qa-text"><?= e($qa['question'] ?? '') ?></p>
+            <p class="qa-text"><?= linkify( e($qa['question'] ?? '') ) ?></p>
             <?php if (attrib($qa['question_by'] ?? '') !== ''): ?>
             <p class="qa-attrib">&mdash; <?= e(attrib($qa['question_by'])) ?></p>
             <?php endif; ?>
@@ -46,7 +46,7 @@ $dateLine = ucwords(strtolower($issue['issue']['date_label'] ?? ''));
           <span class="qa-initial qa-a">A</span>
           <div>
             <?php // The answer keeps the editor's line breaks (plain_lines + nl2br). ?>
-            <p class="qa-text"><?= nl2br(e($qa['answer'] ?? '')) ?></p>
+            <p class="qa-text"><?= linkify( nl2br(e($qa['answer'] ?? '')) ) ?></p>
             <?php if (attrib($qa['answer_by'] ?? '') !== ''): ?>
             <p class="qa-attrib">&mdash; <?= e(attrib($qa['answer_by'])) ?></p>
             <?php endif; ?>
@@ -78,14 +78,14 @@ $dateLine = ucwords(strtolower($issue['issue']['date_label'] ?? ''));
 
       <div class="p2-col">
         <?= section_header('All Hands on Deck', $ah['icon'] ?? null, 'sec-head-p2') ?>
-        <p class="ah-intro"><?= rich($ah['intro'] ?? '') ?></p>
+        <p class="ah-intro"><?= linkify( rich($ah['intro'] ?? '') ) ?></p>
         <?php foreach (array_slice($ah['items'] ?? [], 0, 4) as $i => $item): ?>
         <?php if ($i > 0): ?><div class="item-divider item-divider-ah"></div><?php endif; ?>
         <div class="icon-item">
           <?= tda_icon($item['icon'] ?? null, 18, 'item-icon') ?>
           <?php // Strip the joint here too, so issues saved before the rule render clean.
             $ahLead = preg_replace('/[\s\x{00B7}]+$/u', '', trim($item['lead'] ?? ''));
-            $ahText = preg_replace('/^[\s\x{00B7}]+/u', '', trim(rich($item['text'] ?? ''))); ?>
+            $ahText = linkify(preg_replace('/^[\s\x{00B7}]+/u', '', trim(rich($item['text'] ?? '')))); ?>
           <p class="ah-item-text"><strong><?= e($ahLead) ?></strong><?= $ahLead !== '' && $ahText !== '' ? ' · ' : ' ' ?><?= $ahText ?></p>
         </div>
         <?php endforeach; ?>
@@ -96,7 +96,7 @@ $dateLine = ucwords(strtolower($issue['issue']['date_label'] ?? ''));
       <?= section_header('Shout‑Outs', $so['icon'] ?? null, 'sec-head-p2') ?>
       <div class="icon-item">
         <?= tda_icon($so['item_icon'] ?? null, 18, 'item-icon') ?>
-        <p class="shoutouts-text"><?= rich($so['text'] ?? '') ?></p>
+        <p class="shoutouts-text"><?= linkify( rich($so['text'] ?? '') ) ?></p>
       </div>
     </div>
 
@@ -106,7 +106,7 @@ $dateLine = ucwords(strtolower($issue['issue']['date_label'] ?? ''));
         <div class="dock-eyebrow"><?= e($dt['eyebrow'] ?? '') ?></div>
         <div class="icon-item">
           <?= tda_icon($dt['item_icon'] ?? null, 18, 'item-icon') ?>
-          <p class="dock-text"><?= rich($dt['text'] ?? '') ?></p>
+          <p class="dock-text"><?= linkify( rich($dt['text'] ?? '') ) ?></p>
         </div>
       </div>
 
@@ -118,13 +118,13 @@ $dateLine = ucwords(strtolower($issue['issue']['date_label'] ?? ''));
         <div class="sponsor-card">
           <div class="sponsor-name"><?= e($ad['name'] ?? '') ?></div>
           <div class="sponsor-tagline"><?= e($ad['tagline'] ?? '') ?></div>
-          <div class="sponsor-url"><?= e($ad['url'] ?? '') ?></div>
+          <div class="sponsor-url"><?= linkify( e($ad['url'] ?? '') ) ?></div>
         </div>
         <?php else: $tr = $sponsor['trivia'] ?? []; ?>
         <?= section_header('Dock Trivia', $sponsor['icon'] ?? null, 'sec-head-p2') ?>
         <div class="trivia">
           <div class="trivia-headline"><?= e($tr['headline'] ?? '') ?></div>
-          <p class="trivia-text"><?= e($tr['text'] ?? '') ?></p>
+          <p class="trivia-text"><?= linkify( e($tr['text'] ?? '') ) ?></p>
         </div>
         <?php endif; ?>
       </div>

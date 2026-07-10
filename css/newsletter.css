@@ -75,6 +75,8 @@ body.grayscale .sheet { filter: grayscale(1); }
 /* ===== Shared bits ===== */
 .muted { color: var(--muted); }
 .sheet strong { color: var(--ink); }
+/* Auto-linked emails/URLs (linkify): clickable in the PDF, invisible on paper. */
+.sheet a { color: inherit; text-decoration: none; }
 
 .sec-head {
   display: flex;

@@ -59,6 +59,47 @@ function rich(?string $html): string {
     return $html;
 }
 
+/**
+ * Render-only autolink: wrap email addresses, http(s) URLs, and bare domains
+ * in <a> tags so the electronically-distributed PDF is clickable. Styled
+ * invisible by `.sheet a` (inherit color, no underline), so print output is
+ * unchanged. Runs on the ALREADY-sanitized output of e()/rich() — rich()
+ * strips <a>, and stored JSON stays markup-minimal, so this must never run
+ * on the save path. Only text between tags is transformed; the tags
+ * themselves pass through untouched. Bare domains use a conservative TLD
+ * list so ordinary prose can't false-positive into a link.
+ */
+function linkify(string $html): string {
+    $rx = '~
+        [A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}   # email
+      | https?://[^\s<>"\']+                                               # URL with scheme
+      | (?<![\w.@-])(?:[A-Za-z0-9-]+\.)+(?:com|org|net|edu|gov|us|info|io)\b(?:/[^\s<>"\']*)?  # bare domain
+    ~xi';
+    $parts = preg_split('/(<[^>]+>)/', $html, -1, PREG_SPLIT_DELIM_CAPTURE);
+    foreach ($parts as $i => $part) {
+        if ($part === '' || $part[0] === '<') continue;
+        $parts[$i] = preg_replace_callback($rx, function ($m) {
+            $text = $m[0];
+            // Sentence punctuation right after a link stays plain text.
+            $trail = '';
+            if (preg_match('/[.,;:!?)]+$/', $text, $t)) {
+                $trail = $t[0];
+                $text  = substr($text, 0, -strlen($trail));
+            }
+            if ($text === '') return $m[0];
+            if (strpos($text, '@') !== false) {
+                $href = 'mailto:' . $text;
+            } elseif (stripos($text, 'http') === 0) {
+                $href = $text;
+            } else {
+                $href = 'https://' . $text;
+            }
+            return '<a class="auto-link" href="' . $href . '">' . $text . '</a>' . $trail;
+        }, $part);
+    }
+    return implode('', $parts);
+}
+
 /** Render a rich body whose paragraphs are separated by blank lines. */
 function rich_paras(?string $text, string $class = ''): string {
     $out = '';
@@ -66,7 +107,7 @@ function rich_paras(?string $text, string $class = ''): string {
     $attr = $class !== '' ? ' class="' . e($class) . '"' : '';
     foreach ($paras as $p) {
         if (trim($p) === '') continue;
-        $out .= "<p$attr>" . rich($p) . "</p>\n";
+        $out .= "<p$attr>" . linkify( rich($p) ) . "</p>\n";
     }
     return $out;
 }
@@ -127,15 +168,15 @@ function section_header(string $label, ?string $iconId, string $marginClass = ''
 function page_footer(array $settings): string {
     $emails = '';
     foreach ($settings['committee_emails'] ?? [] as $em) {
-        $emails .= '<div class="footer-email">' . e($em) . '</div>';
+        $emails .= '<div class="footer-email">' . linkify( e($em) ) . '</div>';
     }
     return '<div class="footer">'
         . '<div class="footer-left">'
         .   '<img class="footer-anchor" src="assets/anchor-logo.svg" alt="">'
         .   '<div class="footer-informed">'
         .     '<div class="footer-title">' . e($settings['stay_informed_title'] ?? 'Stay Informed') . '</div>'
-        .     '<div class="footer-text">' . e($settings['stay_informed_text'] ?? '') . '</div>'
-        .     '<div class="footer-url">' . e($settings['site_url'] ?? '') . '</div>'
+        .     '<div class="footer-text">' . linkify( e($settings['stay_informed_text'] ?? '') ) . '</div>'
+        .     '<div class="footer-url">' . linkify( e($settings['site_url'] ?? '') ) . '</div>'
         .   '</div>'
         . '</div>'
         . '<div class="footer-right">'
@@ -143,5 +184,5 @@ function page_footer(array $settings): string {
         .   $emails
         . '</div>'
         . '</div>'
-        . '<div class="colophon">' . e($settings['colophon'] ?? '') . '</div>';
+        . '<div class="colophon">' . linkify( e($settings['colophon'] ?? '') ) . '</div>';
 }

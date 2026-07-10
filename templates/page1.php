@@ -50,7 +50,7 @@ $img = $sp['image'] ?? [];
         <?= section_header(($settings['submit_title'] ?? '') !== '' ? $settings['submit_title'] : 'Get Involved', null) ?>
         <div class="icon-item">
           <?= tda_icon(null, 18, 'item-icon') ?>
-          <p class="submit-text"><?= e($settings['submit_text'] ?? '') ?> <span class="submit-email"><?= e($settings['submit_email'] ?? '') ?></span></p>
+          <p class="submit-text"><?= linkify( e($settings['submit_text'] ?? '') ) ?> <span class="submit-email"><?= linkify( e($settings['submit_email'] ?? '') ) ?></span></p>
         </div>
       </div>
     </div>
@@ -67,7 +67,7 @@ $img = $sp['image'] ?? [];
           <?= tda_icon($item['icon'] ?? null, 16, 'item-icon') ?>
           <?php // Strip the joint here too, so issues saved before the rule render clean.
             $chLead = preg_replace('/[\s\x{00B7}]+$/u', '', trim($item['lead'] ?? ''));
-            $chText = preg_replace('/^[\s\x{00B7}]+/u', '', trim(rich($item['text'] ?? ''))); ?>
+            $chText = linkify(preg_replace('/^[\s\x{00B7}]+/u', '', trim(rich($item['text'] ?? '')))); ?>
           <p><strong><?= e($chLead) ?></strong><?= $chLead !== '' && $chText !== '' ? ' · ' : ' ' ?><?= $chText ?></p>
         </div>
         <?php endforeach; ?>
@@ -95,7 +95,7 @@ $img = $sp['image'] ?? [];
 
   <div class="reminder">
     <?= section_header('Friendly Reminder', $fr['icon'] ?? null, 'sec-head-reminder') ?>
-    <p class="reminder-text"><strong class="reminder-lead"><?= e($fr['lead'] ?? '') ?></strong> <?= rich($fr['text'] ?? '') ?></p>
+    <p class="reminder-text"><strong class="reminder-lead"><?= e($fr['lead'] ?? '') ?></strong> <?= linkify( rich($fr['text'] ?? '') ) ?></p>
   </div>
 
   <?= page_footer($settings) ?>

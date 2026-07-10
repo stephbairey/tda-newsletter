@@ -340,6 +340,17 @@ fixed boxes and breaks the locked design, so the editor allows inline marks only
   phrase in its own box and the template bolds it, so the signature look is always right
   without anyone having to remember to bold it.
 
+**Auto-linking (July 2026).** Email addresses, `http(s)` URLs, and bare domains anywhere in
+the rendered pages become real `mailto:`/`https:` links, because the exported PDF is
+distributed electronically as well as printed. This happens at render time only, via
+`linkify()` in `templates/helpers.php`, applied AFTER `rich()`/`e()` at the template echo
+sites (never on the save path — stored JSON stays markup-minimal, and `rich()` would strip
+an `<a>` anyway). Links are visually invisible: `.sheet a { color: inherit;
+text-decoration: none; }`, so screen, print, and PDF look identical to unlinked text. Bare
+domains match against a conservative TLD allowlist (com/org/net/edu/gov/us/info/io) so
+ordinary prose cannot false-positive into a link. Phone numbers are deliberately not
+linked.
+
 **Overflow: soft warning, not a hard block.** When text overflows its box, warn on screen but
 still allow save. Maya is the managing editor and copyfits deliberately; a hard block is
 infuriating mid-edit. Make the warning loud and obvious for the backup editor's sake.
